@@ -8,7 +8,7 @@
     "start": "nodemon app.js"
   },
   "keywords": [],
-  "author": "rummo_daniil",
+  "author": "Danik1320@yandex.by",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
