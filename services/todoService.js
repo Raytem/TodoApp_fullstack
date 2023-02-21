@@ -1,4 +1,4 @@
-import TodoModel from "../Schemas/TodoSchema.js";
+import TodoModel from "../schemas/TodoSchema.js";
 
 class TodoService {
 
