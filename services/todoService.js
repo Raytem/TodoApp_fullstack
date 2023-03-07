@@ -1,9 +1,19 @@
-import TodoModel from "../schemas/TodoSchema.js";
+import TodoModel from "../models/TodoModel.js";
 
 class TodoService {
 
     async getAll() {
         const todos = await TodoModel.find();
+        return todos;
+    }
+
+    async getCompleted() {
+        const todos = await TodoModel.find({isCompleted: true});
+        return todos;
+    }
+
+    async getNotCompleted() {
+        const todos = await TodoModel.find({isCompleted: false});
         return todos;
     }
 
@@ -29,6 +39,22 @@ class TodoService {
         }
         const updatedTodo = await TodoModel.findByIdAndUpdate(id, changedTodo);
         return updatedTodo;
+    }
+
+    async partialUpdate(id, objWithUpdatedFields) {
+        if(!id || !objWithUpdatedFields) {
+            throw new Error('Request body or id is not defined');
+        }
+
+        const todo = await TodoModel.findById(id);
+
+        for (let prop in objWithUpdatedFields) {
+            if ('performers' in todo) {
+                todo[prop] = objWithUpdatedFields[prop];
+            }
+        }
+        todo.save();
+        return todo;
     }
 
     async delete(id) {

@@ -7,6 +7,7 @@ todoRouter.get('/', TodoController.getAll);
 todoRouter.get('/:id', TodoController.getOne);
 todoRouter.post('/', TodoController.create);
 todoRouter.put('/:id', TodoController.update);
+todoRouter.patch('/:id', TodoController.partialUpdate);
 todoRouter.delete('/:id', TodoController.delete);
 
 export default todoRouter;
