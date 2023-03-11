@@ -1,6 +1,6 @@
 import todoRouter from "./routers/todoRouter.js";
 import express from "express";
-import startApp from "./utils/startApp.js";
+import startApp from "./startApp.js";
 import userRouter from "./routers/userRouter.js";
 
 const app = express();

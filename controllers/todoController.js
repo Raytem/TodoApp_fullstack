@@ -1,45 +1,14 @@
 import TodoService from "../services/todoService.js";
+import getFilteredAndSorted from "../utils/getFilteredAndSorted.js";
 
 class TodoController {
     
     async getAll(req, res) {
         try {
-            const query = req.query;
-
-            if (Object.keys(query).length != 0) {
-                let sortedTodos = [];
-                
-                if ('sort' in query) {
-                    const sortParams = query.sort.split(',');
-
-                    if (sortParams.includes('isCompleted')) {
-                        sortedTodos = await TodoService.getCompleted();
-                    } 
-
-                    else if (sortParams.includes('!isCompleted')) {
-                        sortedTodos = await TodoService.getNotCompleted();
-                    }
-
-                    else {
-                        sortedTodos = await TodoService.getAll();
-                    }
-
-                    sortParams.forEach((param) => {
-                        sortedTodos = sortedTodos.sort((a, b) => {
-                            if (typeof(a[param]) === 'string') {
-                                return a[param].localeCompare(b[param]);
-                            } else {
-                                return b[param] - a[param];
-                            }
-                        })
-                    })
-                }
-                return res.status(201).json(sortedTodos);
-            } else {
-                const todos = await TodoService.getAll();
-                return res.status(201).json(todos);
-            }
+            const todos = await getFilteredAndSorted(TodoService, req.query);
+            return res.status(200).json(todos);
         } catch (e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }

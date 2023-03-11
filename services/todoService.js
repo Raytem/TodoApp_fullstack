@@ -7,13 +7,18 @@ class TodoService {
         return todos;
     }
 
-    async getCompleted() {
-        const todos = await TodoModel.find({isCompleted: true});
+    async getFiltered(filterObj) {
+        const todos = await TodoModel.find(filterObj);
         return todos;
     }
 
-    async getNotCompleted() {
-        const todos = await TodoModel.find({isCompleted: false});
+    async getSorted(sortObj) {
+        const todos = await TodoModel.find().sort(sortObj);
+        return todos;
+    }
+
+    async getFilteredAndSorted(filterObj, sortObj) {
+        const todos = await TodoModel.find(filterObj).sort(sortObj);
         return todos;
     }
 

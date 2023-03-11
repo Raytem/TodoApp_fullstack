@@ -11,7 +11,7 @@ const TodoSchema = new mongoose.Schema({
     userID: {type: Schema.Types.ObjectId},
     creationDate: {type: Date, default: Date.now},
     performers: [{ref: UserSchema, type: Schema.Types.ObjectId}]
-}, { toJSON: {virtuals: true} });
+}, { toJSON: {virtuals: true}, toObject: {virtuals: true} });
 
 TodoSchema.virtual('cntOfPerformers').get(function() {
     return this.performers.length;
