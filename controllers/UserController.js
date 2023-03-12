@@ -7,6 +7,7 @@ class UserController {
             const users = await UserService.getAll();
             return res.status(201).json(users);
         } catch(e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }
@@ -17,6 +18,7 @@ class UserController {
             const user = await UserService.getOne(id);
             return res.status(201).json(user);
         } catch(e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }
@@ -26,6 +28,7 @@ class UserController {
             const user = UserService.create(req.body);
             return res.status(201).json(user);
         } catch(e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }

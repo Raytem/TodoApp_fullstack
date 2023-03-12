@@ -42,7 +42,13 @@ class TodoService {
         if(!id || !changedTodo) {
             throw new Error('Request body or id is not defined');
         }
-        const updatedTodo = await TodoModel.findByIdAndUpdate(id, changedTodo);
+        const updatedTodo = await TodoModel.findByIdAndUpdate(
+            id,
+            {...changedTodo, lastModified: (Date.now() + 10800000)}
+        )
+        .then((data) => data)
+        .catch((err) => {console.log(err); return err});
+
         return updatedTodo;
     }
 
@@ -50,15 +56,13 @@ class TodoService {
         if(!id || !objWithUpdatedFields) {
             throw new Error('Request body or id is not defined');
         }
+        const todo = await TodoModel.findByIdAndUpdate(
+            id, 
+            {$set: {...objWithUpdatedFields, lastModified: (Date.now() + 10800000)}}
+        )
+        .then((data) => data)
+        .catch((err) => {console.log(err); return err});
 
-        const todo = await TodoModel.findById(id);
-
-        for (let prop in objWithUpdatedFields) {
-            if ('performers' in todo) {
-                todo[prop] = objWithUpdatedFields[prop];
-            }
-        }
-        todo.save();
         return todo;
     }
 

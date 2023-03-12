@@ -9,7 +9,8 @@ const TodoSchema = new mongoose.Schema({
     body: {type: String, required: true},
     isCompleted: {type: Boolean, required: true},
     userID: {type: Schema.Types.ObjectId},
-    creationDate: {type: Date, default: Date.now},
+    creationDate: {type: Date, default: (Date.now() + 10800000)},
+    lastModified: {type: Date, default: (Date.now() + 10800000)},
     performers: [{ref: UserSchema, type: Schema.Types.ObjectId}]
 }, { toJSON: {virtuals: true}, toObject: {virtuals: true} });
 

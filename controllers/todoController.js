@@ -18,6 +18,7 @@ class TodoController {
             const todo = await TodoService.getOne(req.params.id);
             return res.status(201).json(todo);
         } catch (e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }
@@ -27,6 +28,7 @@ class TodoController {
             const todo = await TodoService.create(req.body);
             return res.status(201).json(todo);
         } catch (e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }
@@ -36,6 +38,7 @@ class TodoController {
             const updatedTodo = await TodoService.update(req.params.id, req.body);
             return res.status(201).json(updatedTodo);
         } catch (e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }
@@ -45,6 +48,7 @@ class TodoController {
             const updatedTodo = await TodoService.partialUpdate(req.params.id, req.body);
             return res.status(201).json(updatedTodo);
         } catch (e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }
@@ -54,6 +58,7 @@ class TodoController {
             const todo = await TodoService.delete(req.params.id);
             return res.status(201).json(todo);
         } catch (e) {
+            console.error(e)
             return res.status(500).json(e);
         }
     }

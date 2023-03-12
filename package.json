@@ -6,13 +6,12 @@
   "type": "module",
   "scripts": {
     "start": "nodemon app.js",
-    "filter": "node ./utils/reqFilter.js"
+    "test": "node ./__test.js"
   },
   "keywords": [],
   "author": "Danik1320@yandex.by",
   "license": "ISC",
   "dependencies": {
-    "@mw-experts/rsql": "^2.2.1",
     "express": "^4.18.2",
     "mongoose": "^6.9.2",
     "rsql": "^1.0.7",
