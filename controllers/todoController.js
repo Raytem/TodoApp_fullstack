@@ -1,11 +1,12 @@
 import TodoService from "../services/todoService.js";
-import getFilteredAndSorted from "../utils/getFilteredAndSorted.js";
+import getProcessedQuery from "../utils/getProcessedQuery.js";
 
 class TodoController {
     
     async getAll(req, res) {
         try {
-            const todos = await getFilteredAndSorted(TodoService, req.query);
+            const processedQuery = getProcessedQuery(req.query);
+            const todos = await TodoService.getAll(processedQuery);
             return res.status(200).json(todos);
         } catch (e) {
             console.error(e)

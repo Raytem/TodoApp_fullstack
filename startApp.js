@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PORT = 8081;
+const PORT = 8080;
 const DB_URL = "mongodb+srv://raytem:Dan124379@cluster0.pdgfacq.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.set('strictQuery', false);

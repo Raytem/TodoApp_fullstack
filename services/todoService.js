@@ -2,23 +2,12 @@ import TodoModel from "../models/TodoModel.js";
 
 class TodoService {
 
-    async getAll() {
-        const todos = await TodoModel.find();
-        return todos;
-    }
-
-    async getFiltered(filterObj) {
-        const todos = await TodoModel.find(filterObj);
-        return todos;
-    }
-
-    async getSorted(sortObj) {
-        const todos = await TodoModel.find().sort(sortObj);
-        return todos;
-    }
-
-    async getFilteredAndSorted(filterObj, sortObj) {
-        const todos = await TodoModel.find(filterObj).sort(sortObj);
+    async getAll({skip, limit, filter, sort}) {
+        const todos = await TodoModel
+            .find(filter)
+            .skip(skip)
+            .limit(limit)
+            .sort(sort);
         return todos;
     }
 

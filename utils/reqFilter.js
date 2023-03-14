@@ -1,12 +1,12 @@
 import rsqlMongoDB from "rsql-mongodb";
 
-function replaceOperators(filterStr) {
-    return filterStr.replace('>=', '=ge=').replace('<=', '=le=').replace('>', '=gt=').replace('<', '=lt=');
+function replaceOperators(strForParse) {
+    return strForParse.replace('>=', '=ge=').replace('<=', '=le=').replace('>', '=gt=').replace('<', '=lt=');
 }
 
-export default function reqFilter(filterStr) {
+export default function reqFilter(strForParse) {
     try {
-        const result = rsqlMongoDB(replaceOperators(filterStr));
+        const result = rsqlMongoDB(replaceOperators(strForParse));
         return result;
     } catch(e) {
         return new Error("Error when parsing the query string");
