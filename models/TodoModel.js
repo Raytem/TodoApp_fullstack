@@ -11,11 +11,11 @@ const TodoSchema = new mongoose.Schema({
     userID: {type: Schema.Types.ObjectId},
     creationDate: {type: Date, default: (Date.now() + 10800000)},
     lastModified: {type: Date, default: (Date.now() + 10800000)},
-    performers: [{ref: UserSchema, type: Schema.Types.ObjectId}]
+    performers_ids: [{ref: UserSchema, type: Schema.Types.ObjectId}]
 }, { toJSON: {virtuals: true}, toObject: {virtuals: true} });
 
 TodoSchema.virtual('cntOfPerformers').get(function() {
-    return this.performers.length;
+    return this.performers_ids.length;
 });
 
 export default mongoose.model('todo', TodoSchema);
