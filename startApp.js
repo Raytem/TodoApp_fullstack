@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const PORT = 8080;
-const DB_URL = "mongodb+srv://raytem:Dan124379@cluster0.pdgfacq.mongodb.net/?retryWrites=true&w=majority";
+const DB_URL = "mongodb+srv://raytem:todoRest12345@cluster0.pdgfacq.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.set('strictQuery', false);
 
@@ -16,4 +16,4 @@ async function startApp(app) {
     }
 }
 
-export default startApp;
+export default startApp;//todorest12345
