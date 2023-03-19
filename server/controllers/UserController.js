@@ -12,7 +12,7 @@ class UserController {
         }
     }
 
-    async getOne(req,res) {
+    async getOne(req, res) {
         try {
             const id = req.params.id;
             const user = await UserService.getOne(id);
@@ -23,9 +23,29 @@ class UserController {
         }
     }
 
+    async getTodosByUserId(req, res) {
+        try {
+            const todos = await UserService.getTodosByUserId(req.params.id);
+            return res.status(201).json(todos);
+        } catch(e) {
+            console.error(e)
+            return res.status(500).json(e);
+        }
+    }
+
+    async delete(req, res) {
+        try {
+            const user = await UserService.delete(req.params.id);
+            return res.status(201).json(user);
+        } catch(e) {
+            console.error(e)
+            return res.status(500).json(e);
+        }
+    }
+
     async registration(req, res) {
         try {
-            const user = UserService.registration(req.body);
+            const user = await UserService.registration(req.body);
             return res.status(201).json(user);
         } catch(e) {
             console.error(e)

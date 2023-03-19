@@ -24,9 +24,29 @@ class TodoController {
         }
     }
 
+    async getUsersByTodoId(req, res) {
+        try {
+            const todo = await TodoService.getUsersByTodoId(req.params.id);
+            return res.status(201).json(todo);
+        } catch (e) {
+            console.error(e)
+            return res.status(500).json(e);
+        }
+    }
+
     async create(req, res) {
         try {
-            const todo = await TodoService.create(req.body);
+            const todo = await TodoService.create(req.body, req.params.userId);
+            return res.status(201).json(todo);
+        } catch (e) {
+            console.error(e)
+            return res.status(500).json(e);
+        }
+    }
+
+    async addTodoByUserId(req, res) {
+        try {
+            const todo = await TodoService.addTodoByUserId(req.params.todoId, req.params.userId);
             return res.status(201).json(todo);
         } catch (e) {
             console.error(e)
@@ -56,7 +76,7 @@ class TodoController {
 
     async delete(req, res) {
         try {
-            const todo = await TodoService.delete(req.params.id);
+            const todo = await TodoService.delete(req.params.todoId, req.params.userId);
             return res.status(201).json(todo);
         } catch (e) {
             console.error(e)

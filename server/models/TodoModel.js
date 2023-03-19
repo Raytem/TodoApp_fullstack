@@ -1,19 +1,18 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import { Schema } from "mongoose";
 import UserModel from "./UserModel.js";
 
-const TodoSchema = new mongoose.Schema({
+const todoSchema = new mongoose.Schema({
     title: {type: String, required: true},
     body: {type: String, required: true},
-    isCompleted: {type: Boolean, required: true},
-    userID: {type: Schema.Types.ObjectId},
+    isCompleted: {type: Boolean, default: false},
     creationDate: {type: Date, default: (Date.now() + 10800000)},
     lastModified: {type: Date, default: (Date.now() + 10800000)},
-    performers_ids: [{ref: 'user', type: Schema.Types.ObjectId}]
+    userList: [{ref: 'user', type: ObjectId}]
 }, { toJSON: {virtuals: true}, toObject: {virtuals: true} });
 
-TodoSchema.virtual('cntOfPerformers').get(function() {
-    return this.performers_ids.length;
+todoSchema.virtual('cntOfUsers').get(function() {
+    return this.userList.length;
 });
 
-export default mongoose.model('todo', TodoSchema);
+export default mongoose.model('todo', todoSchema);
