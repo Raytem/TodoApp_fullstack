@@ -1,8 +1,9 @@
-import {mongoose, Schema} from "mongoose";
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-const TokenModel = new mongoose.Schema({
-    user: {type: Schema.Types.ObjectId, ref: 'user'},
+const tokenSchema = new mongoose.Schema({
+    userId: {type: Schema.Types.ObjectId, ref: 'users', required: true},
     refreshToken: {type: String, required: true}
 })
 
-export default model('token', TokenModel);
+export default mongoose.model('tokens', tokenSchema);

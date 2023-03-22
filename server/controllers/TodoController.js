@@ -1,86 +1,76 @@
 import TodoService from "../services/todoService.js";
-import getProcessedQuery from "../utils/getProcessedQuery.js";
 
 class TodoController {
     
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         try {
-            const processedQuery = getProcessedQuery(req.query);
-            const todos = await TodoService.getAll(processedQuery);
+            const todos = await TodoService.getAll(req.query);
             return res.status(200).json(todos);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async getOne(req, res) {
+    async getOne(req, res, next) {
         try {
             const todo = await TodoService.getOne(req.params.id);
-            return res.status(201).json(todo);
+            return res.status(200).json(todo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async getUsersByTodoId(req, res) {
+    async getUsersByTodoId(req, res, next) {
         try {
-            const todo = await TodoService.getUsersByTodoId(req.params.id);
-            return res.status(201).json(todo);
+            const todo = await TodoService.getUsersByTodoId(req.params.id, req.query);
+            return res.status(200).json(todo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             const todo = await TodoService.create(req.body, req.params.userId);
             return res.status(201).json(todo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async addTodoByUserId(req, res) {
+    async addTodoByUserId(req, res, next) {
         try {
             const todo = await TodoService.addTodoByUserId(req.params.todoId, req.params.userId);
-            return res.status(201).json(todo);
+            return res.status(202).json(todo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async update(req, res) {
+    async update(req, res, next) {
         try {
             const updatedTodo = await TodoService.update(req.params.id, req.body);
-            return res.status(201).json(updatedTodo);
+            return res.status(202).json(updatedTodo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async partialUpdate(req, res) {
+    async partialUpdate(req, res, next) {
         try {
             const updatedTodo = await TodoService.partialUpdate(req.params.id, req.body);
-            return res.status(201).json(updatedTodo);
+            return res.status(202).json(updatedTodo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async delete(req, res) {
+    async delete(req, res, next) {
         try {
             const todo = await TodoService.delete(req.params.todoId, req.params.userId);
-            return res.status(201).json(todo);
+            return res.status(202).json(todo);
         } catch (e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 

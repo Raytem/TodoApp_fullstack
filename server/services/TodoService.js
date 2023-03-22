@@ -1,51 +1,58 @@
 import TodoModel from "../models/TodoModel.js";
 import UserModel from "../models/UserModel.js";
-import { mongoose } from "mongoose";
 import UserDTO from "../DTOs/UserDTO.js";
+import getProcessedQuery from "../utils/getProcessedQuery.js";
+import ApiError from "../exceptions/ApiError.js";
 
 class TodoService {
 
-    async getAll({skip, limit, filter, sort}) {
+    async getAll(queryParams) {
+        const {filter, skip, limit, sort} = getProcessedQuery(queryParams);
+
         const todos = await TodoModel
             .find(filter)
             .skip(skip)
             .limit(limit)
             .sort(sort);
+
         return todos;
     }
 
     async getOne(id) {
         if (!id) {
-            throw new Error('Id is not defined');
+            throw ApiError.BadRequestError('Id is not defined');
         }
         const todo = await TodoModel.findById(id);
         return todo;
     }
 
-    async getUsersByTodoId(id) {
+    async getUsersByTodoId(id, queryParams) {
         const todo = await TodoModel.findById(id);
+        const {filter, skip, limit, sort} = getProcessedQuery(queryParams);
 
         if (!todo) {
-            throw new Error('Request body is not defined');
+            throw ApiError.BadRequestError('Request body is not defined');
         }
 
-        const users = await UserModel.find({todoList: { $in: [id] } })
+        const users = await UserModel.find({$and: [{ todoList: { $in: [id] } }, filter]})
+            .skip(skip)
+            .limit(limit)
+            .sort(sort);
         const usersDTOs = users.map(user => new UserDTO(user));
 
         return usersDTOs;
     }
     
     async create(todo, userId) {
-        if (!todo) {
-            throw new Error('Request body is not defined');
-        }
-
         const user = await UserModel.findById(userId);
-        if (!user) {
-            throw new Error('User is not defined');
-        }
-
         const newTodo = await TodoModel.create(todo);
+
+        if (!todo) {
+            throw ApiError.BadRequestError('Request body is not defined');
+        }
+        if (!user) {
+            throw ApiError.BadRequestError('User is not defined');
+        }
 
         newTodo.userList.push(userId);
         user.todoList.push(newTodo._id);
@@ -60,14 +67,14 @@ class TodoService {
         const user = await UserModel.findById(userId);
 
         if (!todo) {
-            throw new Error('Todo is not defined');
+            throw ApiError.BadRequestError('Todo is not defined');
         }
         if (!user) {
-            throw new Error('User is not defined');
+            throw ApiError.BadRequestError('User is not defined');
         }
 
-        todo.userList.push(userId);
-        user.todoList.push(todo._id);
+        if (!todo.userList.includes(userId)) todo.userList.push(userId);
+        if (!user.todoList.includes(todo._id))user.todoList.push(todo._id);
         await todo.save();
         await user.save();
 
@@ -76,7 +83,7 @@ class TodoService {
 
     async update(id, changedTodo) {
         if(!id || !changedTodo) {
-            throw new Error('Request body or id is not defined');
+            throw ApiError.BadRequestError('Request body or id is not defined');
         }
         const updatedTodo = await TodoModel.findByIdAndUpdate(
             id,
@@ -90,7 +97,7 @@ class TodoService {
 
     async partialUpdate(id, objWithUpdatedFields) {
         if(!id || !objWithUpdatedFields) {
-            throw new Error('Request body or id is not defined');
+            throw ApiError.BadRequestError('Request body or id is not defined');
         }
         const todo = await TodoModel.findByIdAndUpdate(
             id, 
@@ -107,10 +114,10 @@ class TodoService {
         const userThatRemove = await UserModel.findById(userIdThatRemove);
 
         if (!todoId) {
-            throw new Error('Id is not defined');
+            throw ApiError.BadRequestError('Id is not defined');
         }
         if (!userThatRemove) {
-            throw new Error('User is not defined');
+            throw ApiError.BadRequestError('User is not defined');
         }
         
         //if the user is the creator

@@ -1,95 +1,99 @@
 import UserService from "../services/UserService.js";
+import { validationResult } from "express-validator";
+import ApiError from "../exceptions/ApiError.js";
 
 class UserController {
 
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         try {
-            const users = await UserService.getAll();
-            return res.status(201).json(users);
+            const users = await UserService.getAll(req.query);
+            return res.status(200).json(users);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async getOne(req, res) {
+    async getOne(req, res, next) {
         try {
             const id = req.params.id;
             const user = await UserService.getOne(id);
-            return res.status(201).json(user);
+            return res.status(200).json(user);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async getTodosByUserId(req, res) {
+    async getTodosByUserId(req, res, next) {
         try {
-            const todos = await UserService.getTodosByUserId(req.params.id);
-            return res.status(201).json(todos);
+            const todos = await UserService.getTodosByUserId(req.params.id, req.query);
+            return res.status(200).json(todos);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async delete(req, res) {
+    async delete(req, res, next) {
         try {
             const user = await UserService.delete(req.params.id);
-            return res.status(201).json(user);
+            return res.status(202).json(user);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async registration(req, res) {
+    async registration(req, res, next) {
         try {
-            const user = await UserService.registration(req.body);
-            return res.status(201).json(user);
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequestError('Validation error', errors.array()));
+            }
+            const userData = await UserService.registration(req.body);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+            return res.status(201).json(userData);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async login(req, res) {
+    async login(req, res, next) {
         try {
-            
-            return res.status(201).json();
+            const {email, password} = req.body;
+            const userData = await UserService.login(email, password);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+            return res.status(202).json(userData);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async logout(req, res) {
+    async logout(req, res, next) {
         try {
-            
-            return res.status(201).json();
+            const {refreshToken} = req.cookies;
+            const token = await UserService.logout(refreshToken);
+            return res.status(202).json(token);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async activate(req, res) {
+    async activate(req, res, next) {
         try {
-            
-            return res.status(201).json();
+            const activationLink = req.params.link;
+            await UserService.activate(activationLink);
+            return res.redirect(process.env.CLIENT_URL);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
-    async refreshToken(req, res) {
+    async refreshToken(req, res, next) {
         try {
-            
-            return res.status(201).json();
+            const {refreshToken} = req.cookies;
+            const userData = await UserService.refreshToken(refreshToken);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+            return res.status(202).json(userData);
         } catch(e) {
-            console.error(e)
-            return res.status(500).json(e);
+            next(e);
         }
     }
 
