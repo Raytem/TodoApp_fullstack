@@ -92,7 +92,7 @@ class TodoService {
         .then((data) => data)
         .catch((err) => {console.log(err); return err});
 
-        return updatedTodo;
+        return await TodoModel.findById(updatedTodo.id);
     }
 
     async partialUpdate(id, objWithUpdatedFields) {
@@ -106,7 +106,9 @@ class TodoService {
         .then((data) => data)
         .catch((err) => {console.log(err); return err});
 
-        return todo;
+        console.log(todo)
+
+        return await TodoModel.findById(todo.id);
     }
 
     async delete(todoId, userIdThatRemove) {

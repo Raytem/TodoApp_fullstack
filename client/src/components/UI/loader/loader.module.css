@@ -1,0 +1,25 @@
+
+.loader {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+    border-width: 5px;
+    border-style: solid;
+    border-left-color: rgb(233, 233, 233);
+    border-right-color: rgb(233, 233, 233);
+    border-top-color: transparent;
+    border-bottom-color: rgb(233, 233, 233);
+
+    animation: spin 1s infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
