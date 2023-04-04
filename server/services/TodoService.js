@@ -106,8 +106,6 @@ class TodoService {
         .then((data) => data)
         .catch((err) => {console.log(err); return err});
 
-        console.log(todo)
-
         return await TodoModel.findById(todo.id);
     }
 

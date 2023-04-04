@@ -2,5 +2,26 @@
     display: flex;
     gap: 10px;
 
-    margin-bottom: 40px;
+    margin-bottom: 80px;
+    margin-top: 40px;
+}
+
+#addTodo {
+    padding: 10px;
+    background-color: var(--white);
+    border: 2px solid var(--whiteBorder);
+}
+
+#addTodo div {
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+    background: url('../../public/add.svg') no-repeat center;
+    background-size: contain;
+}
+
+@media (max-width: 550px) {
+    .todos-input {
+        flex-direction: column;
+    }
 }

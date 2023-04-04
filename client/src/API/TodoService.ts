@@ -2,9 +2,9 @@ import axios from "axios";
 import { ITodo } from "../models/ITodo";
 import { ITodoForChange } from "../models/ITodoForChange";
 
-class TodoReq {
+class TodoService {
 
-    private SERVER_URL: string = 'http://localhost:8080';
+    private SERVER_URL: string = 'http://localhost:8081';
     
     public async getAll(page?: number, limit?: number): Promise<ITodo[]> {
         const response = await axios.get<ITodo[]>( `${this.SERVER_URL}/todos`,
@@ -29,4 +29,4 @@ class TodoReq {
     
 }
 
-export default new TodoReq();
+export default new TodoService();

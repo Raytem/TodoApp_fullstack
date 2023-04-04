@@ -1,10 +1,51 @@
-.input {
-    padding: 10px 15px;
+
+.searchSection {
+    position: relative;
     width: 100%;
-    border: 2px solid black;
+}
+
+.lbl {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 20px;
+    height: 20px;
+    background: url('../../../../public//loopa.svg') center no-repeat;
+    opacity: .45;
+}
+
+.input {
+    font-size: 1rem;
+    padding: 10px 15px 10px 35px;
+    width: 100%;
+    background: var(--white);
+    border: 2px solid var(--whiteBorder);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
+
+    box-shadow: var(--boxShadow);
+    transition: .3s;
 }
 
 .input:focus {
     outline: none;
+    box-shadow: 0 2px 8px 1px rgba(135, 153, 163, 0.697);
+}
+
+.input:focus + .lbl {
+    opacity: .6;
+    animation: floating .5s ease-in-out;
+}
+
+@keyframes floating {
+    0% {
+        scale: 1;
+    }
+    50% {
+        scale: 1.05;
+    }
+    100% {
+        scale: 1
+    }
 }

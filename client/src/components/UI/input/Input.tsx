@@ -5,6 +5,9 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export const Input: FC<InputProps> = ({...props}) => {
     return (
-        <input {...props} className={styles.input}/>
+        <div className={styles.searchSection}>
+            <input className={styles.input} id='search' {...props}/>
+            <label className={styles.lbl} htmlFor="search"></label>
+        </div>
     )
 }

@@ -7,10 +7,10 @@
     border-radius: 50%;
     border-width: 5px;
     border-style: solid;
-    border-left-color: rgb(233, 233, 233);
-    border-right-color: rgb(233, 233, 233);
+    border-left-color: var(--blueBtn);
+    border-right-color: var(--blueBtn);
     border-top-color: transparent;
-    border-bottom-color: rgb(233, 233, 233);
+    border-bottom-color: var(--blueBtn);
 
     animation: spin 1s infinite;
 }

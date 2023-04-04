@@ -1,0 +1,28 @@
+.notFound {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+.notFound div {
+    width: 20%;
+    height: 20%;
+    background: url('../../../public/free-icon-not-found-1178479.png') no-repeat center;
+    background-size: contain;
+
+    animation: floating infinite 2.6s ease-in-out;
+}
+
+@keyframes floating {
+    0% {
+        scale: 1;
+    }
+    50% {
+        scale: 1.1;
+    }
+    100% {
+        scale: 1
+    }
+}

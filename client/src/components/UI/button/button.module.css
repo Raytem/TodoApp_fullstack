@@ -1,0 +1,16 @@
+.button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px 15px;
+
+    background: rgba(189, 199, 216, 0.203);
+    border: 2px solid rgba(240, 240, 240, 0.85);
+    box-shadow: var(--boxShadow);
+    border-radius: 10px;
+
+    transition: .3s;
+}
+
+.button:hover {
+    box-shadow: var(--boxShadowHover);
+}

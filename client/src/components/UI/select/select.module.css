@@ -1,0 +1,51 @@
+.selectWrapper {
+    cursor: pointer;
+    position: relative;
+}
+
+.select {
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    padding: 10px 30px 10px 15px;
+    height: 100%;
+
+    background-color: var(--white);
+    border: 2px solid var(--whiteBorder);
+    box-shadow: var(--boxShadow);
+    
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.select:hover {
+    box-shadow: var(--boxShadowHover);
+}
+
+.selectWrapper input {
+    appearance: none;
+    position: absolute;
+    content: '';
+    right: 10px;
+
+    width: 16px;
+    height: 100%;
+    background: url('../../../../public/arrow.svg') no-repeat center;
+    transform: rotate(180deg);
+
+    transition: .4s;
+}
+
+.selectWrapper input:checked {
+    transform: rotate(0);
+}
+
+@media (max-width: 550px) {
+    .selectWrapper {
+        width: 100%;
+    }
+
+    .selectWrapper select {
+        width: 100%;
+    }
+}
