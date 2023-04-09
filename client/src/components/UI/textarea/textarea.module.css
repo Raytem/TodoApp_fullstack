@@ -1,0 +1,32 @@
+.textarea {
+    outline: none;
+    overflow: hidden;
+    width: 100%;
+    resize: none;
+    font-size: 1rem;
+
+    background: none;
+
+    padding: 2px;
+    border: 2px solid rgba(189, 199, 216, 0.203);
+    border-radius: 7px;
+
+    transition: .15s border;
+}
+
+.textarea::placeholder {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.textarea:focus {
+    border-color: var(--blueBtn);
+}
+
+/* ---- */
+
+
+.textarea__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+}

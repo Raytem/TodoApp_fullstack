@@ -1,13 +1,14 @@
 import axios from "axios";
 import { IUser } from "../models/IUser";
+import config from '../../config.json'
 
-class UserReq {
+class UserService {
 
     public async getAll(): Promise<IUser[]> {
-        const response: IUser[] = await (await axios.get<IUser[]>('https://jsonplaceholder.typicode.com/users')).data;
-        return response
+        const response = await axios.get<IUser[]>(`${config.API_URL}/users`);
+        return response.data
     }
     
 }
 
-export default new UserReq();
+export default new UserService();

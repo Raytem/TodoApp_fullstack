@@ -1,5 +1,6 @@
 .button {
     cursor: pointer;
+    user-select: none;
     display: inline-block;
     padding: 8px 15px;
 
@@ -7,10 +8,27 @@
     border: 2px solid rgba(240, 240, 240, 0.85);
     box-shadow: var(--boxShadow);
     border-radius: 10px;
+    font-size: .9rem;
+
+    scale: 1;
 
     transition: .3s;
 }
 
+.button:active {
+    scale: .93;
+}
+
 .button:hover {
     box-shadow: var(--boxShadowHover);
+}
+
+.button.button__blue:hover {
+    background: var(--blueBtn);
+    border: 2px solid var(--blueBtnBorder);
+}
+
+.button.button__red:hover {
+    background: var(--redBtn);
+    border: 2px solid var(--redBtnBorder);
 }

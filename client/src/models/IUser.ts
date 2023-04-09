@@ -1,7 +1,7 @@
 import { IData } from "./IData";
 
 export interface IUser extends IData {
-    id: number,
-    name: string,
+    _id: string,
+    nickName: string,
     email: string
 }

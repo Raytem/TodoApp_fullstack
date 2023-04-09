@@ -1,13 +1,12 @@
 import axios from "axios";
 import { ITodo } from "../models/ITodo";
 import { ITodoForChange } from "../models/ITodoForChange";
+import config from '../../config.json'
 
 class TodoService {
-
-    private SERVER_URL: string = 'http://localhost:8081';
     
-    public async getAll(page?: number, limit?: number): Promise<ITodo[]> {
-        const response = await axios.get<ITodo[]>( `${this.SERVER_URL}/todos`,
+    public async getTodosByUserId(userId: string ,page?: number, limit?: number): Promise<ITodo[]> {
+        const response = await axios.get<ITodo[]>( `${config.API_URL}/users/${userId}/todos`,
         {
             params: {
                 page: page,
@@ -18,12 +17,12 @@ class TodoService {
     }
 
     public async update(todoId: string ,fieldsToUpdate: ITodoForChange) {
-        const response = await axios.patch<ITodo>(`${this.SERVER_URL}/todos/${todoId}`, fieldsToUpdate);
+        const response = await axios.patch<ITodo>(`${config.API_URL}/todos/${todoId}`, fieldsToUpdate);
         return response.data;
     }
 
     public async delete(userId: string, todoId: string) {
-        const response = await axios.delete(`${this.SERVER_URL}/${todoId}/${userId}`);
+        const response = await axios.delete(`${config.API_URL}/${todoId}/${userId}`);
         return response.data;
     }
     

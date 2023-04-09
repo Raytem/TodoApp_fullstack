@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use('/auth', authRouter)
 app.use('/todos', todoRouter);
-app.use('/users', authMiddleware, userRouter);
+app.use('/users', userRouter);
 
 app.use( (req, res, next) => next(ApiError.PageNotFound()) );
 

@@ -1,0 +1,32 @@
+
+.userItemContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-height: 51px;
+    padding: 7px 10px 7px 30px;
+
+    border-radius: 10px;
+    
+    box-shadow: var(--boxShadow);
+}
+
+.buttons {
+    margin-left: 20px;
+}
+
+.userItemContainer Button:nth-child(1) {
+    margin-right: 10px;
+}
+
+.userItemContainer Button {
+    box-shadow: 0 0px 5px 1px rgba(175, 196, 208, 0.698);
+    font-weight: 600;
+}
+
+.userItemContainer Button:hover {
+    box-shadow: 0 0px 5px 1px rgba(175, 196, 208, 0.698);
+}
+

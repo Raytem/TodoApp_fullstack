@@ -10,7 +10,6 @@
 
     display: flex;
     align-items: center;
-    word-wrap: break-word;
 
     box-shadow: 0 2px 8px 1px rgba(175, 196, 208, 0.698);
     margin-bottom: 20px;
@@ -19,7 +18,20 @@
 }
 
 .todo h4 {
+    position: relative;
     font-size: 1.15rem;
+    max-width: 555px;
+    padding: 2px;
+    border: 2px solid transparent;
+}
+
+.todo__checkbox:checked + .todoInner  .todoHeader h4 {
+    text-decoration: line-through;
+}
+
+.todo__body {
+    padding: 2px;
+    border: 2px solid transparent;
 }
 
 .todo:hover {
@@ -59,10 +71,8 @@
 
 .todo__checkbox:hover:before {
     opacity: .2;
-    background: url('../../../public/galochka.svg') no-repeat center;
+    background: url('/galochka.svg') no-repeat center;
 }
-
-
 
 .todo__checkbox:checked {
     background-color: var(--blueBtn);
@@ -71,7 +81,7 @@
 .todo__checkbox:checked:before {
     opacity: 1;
     animation: cbAnimIn .5s;
-    background: url('../../../public/galochka.svg') no-repeat center;
+    background: url('/galochka.svg') no-repeat center;
 }
 
 .todo__checkbox:checked:hover:before {
@@ -108,30 +118,29 @@
 .todoHeader__creationDate {
     font-size: 0.8rem;
     color: rgba(173, 192, 204, 0.666);
-    margin-left: 20px;
+    margin-left: 15px;
     text-align: center;
+    white-space: nowrap;
 }
 
-.todo__body {
-    margin-bottom: 30px;
+@media (max-width: 550px) {
+    .todoHeader__creationDate {
+        white-space: normal;
+    }
+}
+
+.todoCreatorInfo {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: rgba(173, 192, 204, 0.666);
 }
 
 .todoFooter {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
-
-.todoFooter Button:hover {
-    background: var(--blueBtn);
-    border: 2px solid var(--blueBtnBorder);
-}
-
 
 .todoRightButtons :nth-child(1) {
     margin-right: 10px;
-}
-
-.todoRightButtons :nth-child(2):hover {
-    background: var(--redBtn);
-    border: 2px solid var(--redBtnBorder);
 }

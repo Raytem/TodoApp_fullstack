@@ -8,14 +8,17 @@ interface TodoListProps {
     todos: ITodo[],
     isLoading: boolean,
     error: Error | null,
-    completeHandler?: () => void,
-    updateHandler?: () => void,
-    deleteHandler?: () => void
+    completeHandler: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>,
+    editPerformersHandler: (e: React.MouseEvent<HTMLButtonElement>) => void,
+    updateHandler: (e: React.MouseEvent<HTMLButtonElement>, titleText: string, bodyText: string) => Promise<void>,
+    deleteHandler: (e: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-export const TodoList: FC<TodoListProps> = ({todos, isLoading, error, completeHandler, updateHandler, deleteHandler}) => {
+export const TodoList: FC<TodoListProps> = (
+  {todos, isLoading, error, completeHandler, updateHandler, deleteHandler, editPerformersHandler}
+) => {
   return (
-    <div>
+    <>
         {
           (isLoading) 
           ?
@@ -28,11 +31,12 @@ export const TodoList: FC<TodoListProps> = ({todos, isLoading, error, completeHa
               todos.map(todo =>
                 <Todo key={todo.id} todo={todo}
                   completeHandler={completeHandler}
+                  editPerformersHandler={editPerformersHandler}
                   updateHandler={updateHandler}
                   deleteHandler={deleteHandler}
                 />
               )
         }
-    </div>
+    </>
   )
 }

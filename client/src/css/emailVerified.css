@@ -1,0 +1,19 @@
+.emailVerifiedDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.emailVerifiedDiv .emailSvg {
+    margin: 0 auto;
+    height: 150px;
+    background: url('/emailVerified.svg') no-repeat center;
+    background-size: contain;
+}
+
+.emailVerifiedDiv Button {
+    margin-top: 40px;
+    width: 100%;
+}

@@ -56,6 +56,7 @@ class TodoService {
 
         newTodo.userList.push(userId);
         user.todoList.push(newTodo._id);
+        newTodo.creator = user.nickName;
         await newTodo.save();
         await user.save();
 
@@ -87,7 +88,7 @@ class TodoService {
         }
         const updatedTodo = await TodoModel.findByIdAndUpdate(
             id,
-            {...changedTodo, lastModified: (Date.now() + 10800000)}
+            {...changedTodo}
         )
         .then((data) => data)
         .catch((err) => {console.log(err); return err});
@@ -101,7 +102,7 @@ class TodoService {
         }
         const todo = await TodoModel.findByIdAndUpdate(
             id, 
-            {$set: {...objWithUpdatedFields, lastModified: (Date.now() + 10800000)}}
+            {$set: {...objWithUpdatedFields}}
         )
         .then((data) => data)
         .catch((err) => {console.log(err); return err});

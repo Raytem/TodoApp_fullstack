@@ -5,7 +5,7 @@ ACCESS_TOKEN_SECRET=jklJS23jlkJFSDF832JSDFUSF823
 REFRESH_TOKEN_SECRET=MMSsdfKSJF99dsfl23j234lsdf23
 
 SERVER_URL=http://localhost:${PORT}
-CLIENT_URL=http://localhost:5050
+CLIENT_URL=http://localhost:5173/emailVerified
 
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587

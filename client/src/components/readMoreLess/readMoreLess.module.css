@@ -1,0 +1,34 @@
+
+.readMoreLess {
+    color:var(--blue);
+    position: relative;
+    background: none;
+    border: none;
+    outline: none;
+    padding-right: 15px;
+    margin-top: 10px;
+    font-size: .85rem;
+}
+
+.readMoreLess::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+
+    width: 7px;
+    height: 7px;
+
+    transform: translate(0, -50%) rotate(45deg);
+
+    border-right: 2px solid var(--blue);
+    border-bottom: 2px solid var(--blue);
+
+    transition: .5s;
+}
+
+.readMoreLess_less::after {
+    top: 60%;
+    transform: translate(0, -40%) rotate(-135deg);
+}
+

@@ -1,0 +1,32 @@
+.signUpDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.signUpDiv h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.signUpDiv form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signUpDiv Button {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.signUpDiv .loginOffer {
+    text-align: center;
+    font-size: .9rem;
+    margin-top: 15px;
+}
+
+.signUpDiv .link {
+    color: var(--blue)
+}

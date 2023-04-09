@@ -1,0 +1,37 @@
+
+.createTodoDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.createTodoDiv WhiteBlock {
+    position: relative;
+}
+
+.createTodoDiv h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.createTodo-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.createTodoDiv Textarea {
+    padding: 8px;
+}
+
+.createTodoDiv Textarea:nth-child(1){
+    margin-bottom: 15px;
+}
+
+.input-title {
+    opacity: .7;
+    font-size: .9rem;
+    margin-bottom: 5px;
+}

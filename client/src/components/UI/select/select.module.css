@@ -9,6 +9,7 @@
     outline: none;
     padding: 10px 30px 10px 15px;
     height: 100%;
+    font-size: .9rem;
 
     background-color: var(--white);
     border: 2px solid var(--whiteBorder);
@@ -30,11 +31,15 @@
 
     width: 16px;
     height: 100%;
-    background: url('../../../../public/arrow.svg') no-repeat center;
+    background: url('/arrow.svg') no-repeat center;
     transform: rotate(180deg);
 
     transition: .4s;
 }
+.selectWrapper input {
+    cursor: pointer;
+}
+
 
 .selectWrapper input:checked {
     transform: rotate(0);

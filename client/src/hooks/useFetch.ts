@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { IData } from '../models/IData';
 
-interface State<T> {
+interface State {
     fetchData: () => Promise<void>,
     isLoading: boolean,
     error: Error | null
@@ -23,7 +23,7 @@ export function useFetch<T extends IData>(fetchFunction: () => Promise<void>) {
         }
     }
 
-    const state: State<T> = {
+    const state: State = {
         fetchData, isLoading, error
     }
 

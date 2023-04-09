@@ -1,0 +1,40 @@
+.switcherBasis {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.764);
+
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 10px;
+
+    box-shadow: 0 2px 8px 1px rgba(175, 196, 208, 0.698);
+    margin-bottom: 20px;
+
+    transition: .3s;
+}
+
+.switcherCaret {
+    pointer-events: none;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+
+    border-radius: 8px;
+    background:rgba(189, 199, 216, 0.203);
+    
+    transition: .4s;
+}
+
+.switcherOption {
+    width: 100%;
+    padding: 4px;
+    text-align: center;
+}

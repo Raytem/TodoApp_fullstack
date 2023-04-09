@@ -1,7 +1,7 @@
 export function dateFormatter(inpDate: Date): string {
     const date: Date = new Date(inpDate);
 
-    const day: number = date.getDay();
+    const day: number = date.getDate();
     const dayStr: string = (day < 10) ? `0${day}` : `${day}`;
 
     const month: number = date.getMonth() + 1;
