@@ -7,6 +7,9 @@ import { ItemsNotFound } from '../itemsNotFound/ItemsNotFound'
 import { Loader } from '../UI/loader/Loader'
 import { UserItem } from '../userItem/UserItem'
 
+import './userList.css'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
 import cfg from '../../../config.json'
 
 interface UserListProps {
@@ -27,24 +30,29 @@ export const UserList: FC<UserListProps> = (
 
     return (
         <>
-        {
-            (isLoading) 
-            ?
-            <Loader/>
-            :
-            (users.length === 0 || error)
-            ? 
-                <ItemsNotFound/>
-            :
-                users.map(user => 
-                    <UserItem
-                        key={user._id} 
-                        user={user}
-                        addPerformerHandler={addPerformerHandler}
-                        removePerformerHandler={removePerformerHandler}
-                    />
-                )
-        } 
+
+            {isLoading &&  <Loader/>}
+
+            {(!isLoading && (error || users.length === 0)) && <ItemsNotFound/>}
+
+            <TransitionGroup className='userList'>
+                {
+                    users.map(user => 
+                        <CSSTransition
+                            key={user._id}
+                            timeout={500}
+                            classNames={'user'}
+                        >
+                                <UserItem
+                                key={user._id} 
+                                user={user}
+                                addPerformerHandler={addPerformerHandler}
+                                removePerformerHandler={removePerformerHandler}
+                            />
+                        </CSSTransition>
+                    )
+                }
+            </TransitionGroup>
         </>  
     )
 }

@@ -1,8 +1,5 @@
 
 .addPerformerModal .userListDiv{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     margin-top: 20px;
     height: 400px;
     width: 100%;

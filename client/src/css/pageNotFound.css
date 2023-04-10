@@ -1,21 +1,22 @@
-.emailVerifiedDiv {
+.pageNotFoundDiv {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    width: 100%;
     text-align: center;
 
     animation: 1s anim forwards;
 }
 
-.emailVerifiedDiv .emailSvg {
+.pageNotFoundDiv .notFoundImg {
     margin: 0 auto;
     height: 150px;
-    background: url('/emailVerified.svg') no-repeat center;
+    background: url('../../public/pageNotFound.png') no-repeat center;
     background-size: contain;
 }
 
-.emailVerifiedDiv Button {
+.pageNotFoundDiv Button {
     margin-top: 40px;
     width: 100%;
 }

@@ -17,15 +17,16 @@
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+}
 
-    animation: .35s fadeIn;
+.modalFrontWrapper {
+    background: transparent;
+    backdrop-filter: none;
+    margin: 20px 10px;
 }
 
 .modalFront {    
-    margin: 30px 10px;
     flex-basis: 100%;
-
-    animation: .35s anim;
 }
 
 .modalHead {
@@ -71,14 +72,4 @@
     height: 100%;
     width: 2px;
     background: var(--black);
-}
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-@keyframes anim {
-    from {transform: translateY(15px)}
-    to {transform: translateY(0px)}
 }

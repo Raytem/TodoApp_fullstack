@@ -1,8 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, useRef } from 'react'
 import { ITodo } from '../../models/ITodo'
 import { ItemsNotFound } from '../itemsNotFound/ItemsNotFound'
 import { Todo } from '../todo/Todo'
 import { Loader } from '../UI/loader/Loader'
+import { CSSTransition, TransitionGroup} from 'react-transition-group';
+import styles from './todoList.module.css';
+import './todoList.css'
 
 interface TodoListProps {
     todos: ITodo[],
@@ -17,26 +20,33 @@ interface TodoListProps {
 export const TodoList: FC<TodoListProps> = (
   {todos, isLoading, error, completeHandler, updateHandler, deleteHandler, editPerformersHandler}
 ) => {
+
   return (
     <>
+      {isLoading &&  <Loader/>}
+
+      {(!isLoading && (error || todos.length === 0)) && <ItemsNotFound/>}
+    
+      <TransitionGroup>
         {
-          (isLoading) 
-          ?
-            <Loader/>
-          :
-            (todos.length === 0 || error)
-            ? 
-              <ItemsNotFound/>
-            :
-              todos.map(todo =>
-                <Todo key={todo.id} todo={todo}
-                  completeHandler={completeHandler}
-                  editPerformersHandler={editPerformersHandler}
-                  updateHandler={updateHandler}
-                  deleteHandler={deleteHandler}
-                />
-              )
+          todos.map(todo =>
+            <CSSTransition
+              key={todo.id}
+              timeout={500}
+              classNames='todo'
+            >
+              <Todo
+                key={todo.id} 
+                todo={todo}
+                completeHandler={completeHandler}
+                editPerformersHandler={editPerformersHandler}
+                updateHandler={updateHandler}
+                deleteHandler={deleteHandler}
+              />
+            </CSSTransition>
+          )
         }
+      </TransitionGroup>
     </>
   )
 }

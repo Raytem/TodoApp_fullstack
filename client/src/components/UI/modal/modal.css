@@ -1,0 +1,33 @@
+
+.modalBack-enter {
+    opacity: 0;
+}
+
+.modalBack-enter-active {
+    transition: .35s;
+    opacity: 1;
+}
+.modalBack-exit-active {
+    transition: .35s;
+    opacity: 0;
+}
+
+
+
+
+.modalFront-enter {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.modalFront-enter-active {
+    transition: .35s;
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.modalFront-exit-active {
+    transition: .35s;
+    transform: translateY(15px);
+    opacity: 0;
+}

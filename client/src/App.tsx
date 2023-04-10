@@ -1,15 +1,10 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
-
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-import styles from './css/container.module.css';
-import { CreateTodoPage } from './pages/CreateTodoPage';
-import { EmailVerified } from './pages/EmailVerified';
-import { LoginPage } from './pages/LoginPage';
-import { SignUpPage } from './pages/SignUpPage';
-import { TodosPage } from './pages/TodosPage';
+import { routes } from './routes';
 import store from './store/index';
+import styles from './css/container.module.css';
 
 function App() {
   const navigate = useNavigate();
@@ -22,15 +17,11 @@ function App() {
         <div className={styles.container}>
           
           <Routes>
-            <Route path='/todos' element={<TodosPage/>}/>
-
-            <Route path='/todos/createTodo' element={<CreateTodoPage/>}/>
-
-            <Route path='/signup' element={<SignUpPage/>}/>
-
-            <Route path='/login' element={<LoginPage/>}/>
-
-            <Route path='/emailVerified' element={<EmailVerified/>}></Route>
+            {
+              routes.map(({path, Element}) => 
+                <Route path={path} element={<Element/>} key={path}/>
+              )
+            }
           </Routes>
           
         </div>

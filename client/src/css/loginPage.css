@@ -3,6 +3,8 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+
+    animation: 1s anim forwards;
 }
 
 .loginDiv h2 {
@@ -29,4 +31,15 @@
 
 .loginDiv .link {
     color: var(--blue)
+}
+
+@keyframes anim {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }

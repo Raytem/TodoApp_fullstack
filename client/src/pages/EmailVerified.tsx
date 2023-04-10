@@ -12,8 +12,8 @@ export const EmailVerified = () => {
     <div className='emailVerifiedDiv'>
       <WhiteBlock>
         <div className='emailSvg'></div>
-        <p>Your email has been successfully verified</p>
-        <Button onClick={() => navigate('/todos')} variant={ButtonTypeEnum.BLUE}>Go home</Button>
+        <h3>Your email has been successfully verified</h3>
+        <Button onClick={() => navigate('/home')} variant={ButtonTypeEnum.BLUE}>Go Home</Button>
       </WhiteBlock>
     </div>
   )
