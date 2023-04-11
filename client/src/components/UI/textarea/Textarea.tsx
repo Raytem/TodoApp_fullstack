@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { FC, useRef } from 'react'
-import { TextAreaTypeEnum } from '../../../enums/TextAreaTypeEnum'
+import { TextAreaTypeEnum } from './TextAreaTypeEnum'
 import styles from './textarea.module.css'
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react'
-import { ButtonTypeEnum } from '../../enums/ButtonTypeEnum'
-import { TextAreaTypeEnum } from '../../enums/TextAreaTypeEnum'
+import { ButtonTypeEnum } from '../UI/button/ButtonTypeEnum'
+import { TextAreaTypeEnum } from '../UI/textarea/TextAreaTypeEnum'
 import { ITodo } from '../../models/ITodo'
 import { dateFormatter } from '../../utils/dateFormatter'
 import { ReadMoreLess } from '../readMoreLess/ReadMoreLess'

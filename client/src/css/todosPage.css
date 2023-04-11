@@ -20,7 +20,7 @@
     background-size: contain;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 576px) {
     .todos-input {
         flex-direction: column;
     }

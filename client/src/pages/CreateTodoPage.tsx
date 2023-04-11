@@ -2,10 +2,10 @@ import React from 'react'
 import { Button } from '../components/UI/button/Button'
 import { Textarea } from '../components/UI/textarea/Textarea'
 import { WhiteBlock } from '../components/UI/whiteBlock/WhiteBlock'
-import { TextAreaTypeEnum } from '../enums/TextAreaTypeEnum'
+import { TextAreaTypeEnum } from '../components/UI/textarea/TextAreaTypeEnum'
 import '../css/createTodoPage.css'
 import { useNavigate } from 'react-router-dom'
-import { ButtonTypeEnum } from '../enums/ButtonTypeEnum'
+import { ButtonTypeEnum } from '../components/UI/button/ButtonTypeEnum'
 
 export const CreateTodoPage = () => {
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/UI/button/Button'
 import { WhiteBlock } from '../components/UI/whiteBlock/WhiteBlock'
 import '../css/emailVerified.css'
-import { ButtonTypeEnum } from '../enums/ButtonTypeEnum'
+import { ButtonTypeEnum } from '../components/UI/button/ButtonTypeEnum'
 
 export const EmailVerified = () => {
   const navigate = useNavigate();

@@ -1,11 +1,9 @@
-import React, { FC, useRef } from 'react'
+import React, { Dispatch, FC, SetStateAction, useRef } from 'react'
 import { ITodo } from '../../models/ITodo'
 import { ItemsNotFound } from '../itemsNotFound/ItemsNotFound'
 import { Todo } from '../todo/Todo'
 import { Loader } from '../UI/loader/Loader'
-import { CSSTransition, TransitionGroup} from 'react-transition-group';
-import styles from './todoList.module.css';
-import './todoList.css'
+import { AnimatePresence, Reorder, motion } from 'framer-motion'
 
 interface TodoListProps {
     todos: ITodo[],
@@ -27,26 +25,29 @@ export const TodoList: FC<TodoListProps> = (
 
       {(!isLoading && (error || todos.length === 0)) && <ItemsNotFound/>}
     
-      <TransitionGroup>
-        {
-          todos.map(todo =>
-            <CSSTransition
-              key={todo.id}
-              timeout={500}
-              classNames='todo'
-            >
-              <Todo
-                key={todo.id} 
-                todo={todo}
-                completeHandler={completeHandler}
-                editPerformersHandler={editPerformersHandler}
-                updateHandler={updateHandler}
-                deleteHandler={deleteHandler}
-              />
-            </CSSTransition>
-          )
-        }
-      </TransitionGroup>
+        <AnimatePresence mode="popLayout">
+            {
+              todos.map(todo => 
+                <motion.li
+                  layout
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  transition={{ type: "just"}}
+                  key={todo.id}
+                >
+                  <Todo
+                    key={todo.id} 
+                    todo={todo}
+                    completeHandler={completeHandler}
+                    editPerformersHandler={editPerformersHandler}
+                    updateHandler={updateHandler}
+                    deleteHandler={deleteHandler}
+                  />
+                </motion.li>
+              )
+            }
+        </AnimatePresence>
     </>
   )
 }

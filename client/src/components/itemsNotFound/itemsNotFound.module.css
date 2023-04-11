@@ -9,7 +9,7 @@
 .notFound div {
     width: 20%;
     height: 20%;
-    background: url('../../../public/free-icon-not-found-1178479.png') no-repeat center;
+    background: url('/free-icon-not-found-1178479.png') no-repeat center;
     background-size: contain;
 
     animation: floating infinite 2.6s ease-in-out;

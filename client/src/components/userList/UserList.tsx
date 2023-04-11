@@ -7,10 +7,8 @@ import { ItemsNotFound } from '../itemsNotFound/ItemsNotFound'
 import { Loader } from '../UI/loader/Loader'
 import { UserItem } from '../userItem/UserItem'
 
-import './userList.css'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-
 import cfg from '../../../config.json'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface UserListProps {
     users: IUser[],
@@ -35,24 +33,27 @@ export const UserList: FC<UserListProps> = (
 
             {(!isLoading && (error || users.length === 0)) && <ItemsNotFound/>}
 
-            <TransitionGroup className='userList'>
-                {
-                    users.map(user => 
-                        <CSSTransition
-                            key={user._id}
-                            timeout={500}
-                            classNames={'user'}
-                        >
-                                <UserItem
-                                key={user._id} 
-                                user={user}
-                                addPerformerHandler={addPerformerHandler}
-                                removePerformerHandler={removePerformerHandler}
-                            />
-                        </CSSTransition>
-                    )
-                }
-            </TransitionGroup>
+            <AnimatePresence mode="popLayout">
+            {
+              users.map(user =>  
+                <motion.li
+                  layout
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  transition={{ type: "just"}}
+                  key={user._id}
+                >
+                    <UserItem
+                        key={user._id} 
+                        user={user}
+                        addPerformerHandler={addPerformerHandler}
+                        removePerformerHandler={removePerformerHandler}
+                    />
+                </motion.li>
+              )
+            }
+        </AnimatePresence>
         </>  
     )
 }

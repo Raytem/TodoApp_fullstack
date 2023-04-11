@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { FC } from 'react'
-import { ButtonTypeEnum } from '../../../enums/ButtonTypeEnum'
+import { ButtonTypeEnum } from './ButtonTypeEnum'
 import styles from './button.module.css'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{

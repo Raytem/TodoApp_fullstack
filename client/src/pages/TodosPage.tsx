@@ -9,13 +9,13 @@ import { useFetch } from '../hooks/useFetch';
 import { useInfinitiePagination } from '../hooks/useInfinitiePagination';
 import { Modal } from '../components/UI/modal/Modal';
 import { Button } from '../components/UI/button/Button';
-import { InputTypeEnum } from '../enums/InputTypeEnum';
+import { InputTypeEnum } from '../components/UI/input/InputTypeEnum';
 import { useNavigate } from 'react-router-dom';
 import { Textarea } from '../components/UI/textarea/Textarea';
-import { ButtonTypeEnum } from '../enums/ButtonTypeEnum';
+import { ButtonTypeEnum } from '../components/UI/button/ButtonTypeEnum';
 import { Alert } from '../components/alert/Alert';
 import { Switcher } from '../components/UI/switcher/Switcher';
-import { TodoOptions } from '../enums/switcherEnums/TodoOptions';
+import { TodoOptions } from '../components/UI/switcher/switcherEnums/TodoOptions';
 import { AddPerformerModal } from '../components/addPerformerModal/AddPerformerModal';
 
 import cfg from '../../config.json'

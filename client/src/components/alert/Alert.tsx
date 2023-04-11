@@ -4,7 +4,7 @@
 // import { Modal } from '../UI/modal/Modal'
 
 import { FC } from "react"
-import { ButtonTypeEnum } from "../../enums/ButtonTypeEnum"
+import { ButtonTypeEnum } from "../UI/button/ButtonTypeEnum"
 import { Button } from "../UI/button/Button"
 import { Modal } from "../UI/modal/Modal"
 

@@ -5,6 +5,7 @@ import './App.css';
 import { routes } from './routes';
 import store from './store/index';
 import styles from './css/container.module.css';
+import { Navbar } from './components/layout/Navbar/Navbar';
 
 function App() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
+        <Navbar/>
         <div className={styles.container}>
           
           <Routes>

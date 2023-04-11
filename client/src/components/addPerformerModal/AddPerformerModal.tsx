@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import UserService from '../../API/UserService';
-import { InputTypeEnum } from '../../enums/InputTypeEnum';
-import { UserOptions } from '../../enums/switcherEnums/UserOptions';
+import { InputTypeEnum } from '../UI/input/InputTypeEnum';
+import { UserOptions } from '../UI/switcher/switcherEnums/UserOptions';
 import { useFetch } from '../../hooks/useFetch';
 import { IUser } from '../../models/IUser';
 import { Input } from '../UI/input/Input';

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/homePage.css';
 import { Button } from '../components/UI/button/Button';
-import { ButtonTypeEnum } from '../enums/ButtonTypeEnum';
+import { ButtonTypeEnum } from '../components/UI/button/ButtonTypeEnum';
 import { useNavigate } from 'react-router-dom';
 
 export const HomePage = () => {
@@ -33,7 +33,7 @@ export const HomePage = () => {
             </div>
 
             <div className="homePageDiv-right">
-                <img src="../../public/todoPicture.png" alt="" />
+                <img src="/todoPicture.png" alt="" />
             </div>
 
         </div>

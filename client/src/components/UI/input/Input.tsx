@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { FC, useRef, useState } from 'react'
-import { InputTypeEnum } from '../../../enums/InputTypeEnum'
+import { InputTypeEnum } from './InputTypeEnum'
 import styles from './input.module.css'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

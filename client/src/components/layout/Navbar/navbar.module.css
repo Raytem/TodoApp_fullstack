@@ -1,0 +1,65 @@
+
+.navbar {
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    height: 50px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.461);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    box-shadow: var(--boxShadow)
+}
+
+.navbar__inner {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+.navbar_container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user_container__logo {
+    background: url('/user.png') center no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+}
+
+.todo_container__logo {
+    background: url('/todo_logo.png') center no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+}
+
+.logout_container__logo {
+    background: url('/logout.svg') center no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+}
+
+
+
+
+
+.navLink {
+    height: 100%;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 0 7px;
+    transition: .3s;
+}
+
+.navLink:hover {
+    background: rgba(189, 199, 216, 0.203);
+}

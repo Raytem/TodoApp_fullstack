@@ -123,7 +123,7 @@
     white-space: nowrap;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 576px) {
     .todoHeader__creationDate {
         white-space: normal;
     }

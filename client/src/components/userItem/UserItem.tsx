@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react'
-import { ButtonTypeEnum } from '../../enums/ButtonTypeEnum'
+import { ButtonTypeEnum } from '../UI/button/ButtonTypeEnum'
 import { ITodo } from '../../models/ITodo'
 import { IUser } from '../../models/IUser'
 import { Button } from '../UI/button/Button'

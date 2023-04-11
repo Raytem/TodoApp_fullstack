@@ -12,7 +12,7 @@
 .pageNotFoundDiv .notFoundImg {
     margin: 0 auto;
     height: 150px;
-    background: url('../../public/pageNotFound.png') no-repeat center;
+    background: url('/pageNotFound.png') no-repeat center;
     background-size: contain;
 }
 

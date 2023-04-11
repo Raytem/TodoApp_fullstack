@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import styles from './modal.module.css'
 import './modal.css'
 import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ModalProps {
     isVisible: boolean,
@@ -26,7 +27,6 @@ export const Modal: FC<ModalProps> = ({isVisible, title, setVisibility, children
         >
           <div className={styles.modalBack}></div>
         </CSSTransition>
-
 
         <CSSTransition
           in={isVisible}

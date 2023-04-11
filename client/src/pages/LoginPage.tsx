@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
 import { WhiteBlock } from '../components/UI/whiteBlock/WhiteBlock'
-import { ButtonTypeEnum } from '../enums/ButtonTypeEnum'
-import { InputTypeEnum } from '../enums/InputTypeEnum'
+import { ButtonTypeEnum } from '../components/UI/button/ButtonTypeEnum'
+import { InputTypeEnum } from '../components/UI/input/InputTypeEnum'
 import '../css/loginPage.css'
 
 export const LoginPage = () => {
