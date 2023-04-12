@@ -64,7 +64,13 @@ export const Todo: FC<todoItemProps> = (
                 <p ref={body} className={styles.todo__body}>{bodyText}</p>
               </ReadMoreLess>
 
-              <div className={styles.todoCreatorInfo}>Creator: {todo.creator}, performers: {todo.cntOfUsers}</div>
+              <div className={styles.todoCreatorInfo}>
+                {
+                  todo.cntOfUsers > 1
+                    ? `Creator: ${todo.creator}, Performers: ${todo.cntOfUsers - 1}`
+                    : `Creator: ${todo.creator}`
+                }
+              </div>
 
                 <div className={styles.todoFooter}>
                 <Button
@@ -133,7 +139,13 @@ export const Todo: FC<todoItemProps> = (
                 style={{height: `${bodyAreaHeight}px`}}
               />
 
-              <div className={styles.todoCreatorInfo}>Creator: {todo.creator}, performers: {todo.cntOfUsers}</div>
+              <div className={styles.todoCreatorInfo}>
+                {
+                  todo.cntOfUsers > 1
+                    ? `Creator: ${todo.creator}, Performers: ${todo.cntOfUsers - 1}`
+                    : `Creator: ${todo.creator}`
+                }
+              </div>
 
               <div className={styles.todoFooter}>
                 <Button

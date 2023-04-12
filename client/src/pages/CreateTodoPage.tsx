@@ -13,7 +13,7 @@ export const CreateTodoPage = () => {
 
   return (
     <div className='createTodoDiv'>
-      <WhiteBlock style={{flexBasis: '100%'}}>
+      <WhiteBlock style={{flexBasis: '100%', margin: '30px 0'}}>
         <h2>New Todo</h2>
         <form>
           <Textarea 

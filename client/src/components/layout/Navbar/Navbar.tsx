@@ -6,53 +6,70 @@ import classNames from 'classnames';
 
 export const Navbar = () => {
 
-    const [isAuth, setIsAuth] = useState<boolean>(true);
+	const navRef = useRef<HTMLDivElement>(null);
 
-    return (
-        <div className={styles.navbar}>
-            <div className={impStyles.container}>
-                <div className={styles.navbar__inner}>
-                    
-                    <NavLink to='/home' className={classNames(styles.navbar_container, styles.todo_container, styles.navLink)}>
-                        <div className={styles.todo_container__logo}></div>
-                        <p className={styles.todo_container__title}>Todo's</p>
-                    </NavLink>
+	let prevOffsetTop = 0;
+	window.addEventListener('scroll', () => {
+		const offsetTop = window.pageYOffset || document.documentElement.scrollTop;
+		if (offsetTop > navRef.current!.offsetHeight / 2) {
+			if (prevOffsetTop > offsetTop) {
+				navRef.current!.style.transform = 'translateY(0)';
+			}
+			if (prevOffsetTop < offsetTop) {
+				navRef.current!.style.transform = 'translateY(-100%)';
+			}
+			prevOffsetTop = offsetTop;
+		}
+	})
 
-                    <div className={styles.navbar_container} >
-                        {
-                            (isAuth) &&
-                            <>
-                                <NavLink  to='/todos' className={classNames(styles.navbar_container, styles.user_container, styles.navLink)}>
-                                    <div className={styles.user_container__logo}></div>
-                                    <p className={styles.user_container__userName}>Username</p>
-                                </NavLink>
-                                
-                                <NavLink to='/home' onClick={() => setIsAuth(false)} className={classNames(styles.navbar_container, styles.logout_container, styles.navLink)}>
-                                    <div  className={styles.logout_container__logo}></div>
-                                </NavLink>
-                            </>
-                        }
+		const [isAuth, setIsAuth] = useState<boolean>(true);
 
-                        {
-                            (!isAuth) &&
-                            <>
-                                <NavLink to='/home' className={classNames(styles.navbar_container, styles.navLink)}>
-                                    Home
-                                </NavLink>
+		return (
+				<div ref={navRef} className={styles.navbar}>
+						<div className={impStyles.container}>
+								<div className={styles.navbar__inner}>
+										
+										<NavLink to='/home' className={classNames(styles.navbar_container, styles.todo_container, styles.navLink)}>
+											<div className={styles.todo_container__logo}></div>
+											<p className={styles.todo_container__title}>Todo's</p>
+										</NavLink>
 
-                                <NavLink to='/signup' className={classNames(styles.navbar_container, styles.navLink)}>
-                                    Sign Up
-                                </NavLink>
+										<div className={styles.navbar_container} >
+												{
+													(isAuth) &&
+													<>
+														<NavLink  to='/todos' className={classNames(styles.navbar_container, styles.user_container, styles.navLink)}>
+															<div className={styles.user_container__logo}></div>
+															<p className={styles.user_container__userName}>Username</p>
+														</NavLink>
+														
+														<NavLink to='/home' onClick={() => setIsAuth(false)} className={classNames(styles.navbar_container, styles.logout_container, styles.navLink)}>
+															<div  className={styles.logout_container__logo}></div>
+														</NavLink>
+													</>
+												}
+ 
 
-                                <NavLink to='/login' className={classNames(styles.navbar_container, styles.navLink)}>
-                                    Login
-                                </NavLink>
-                            </>
-                        }
-                    </div>
+												{
+													(!isAuth) &&
+													<>
+														<NavLink to='/home' className={classNames(styles.navbar_container, styles.navLink)}>
+															Home
+														</NavLink>
 
-                </div>
-            </div>
-        </div>
-    )
+														<NavLink to='/signup' className={classNames(styles.navbar_container, styles.navLink)}>
+															Sign Up
+														</NavLink>
+
+														<NavLink to='/login' className={classNames(styles.navbar_container, styles.navLink)}>
+															Login
+														</NavLink>
+													</>
+												}
+										</div>
+
+								</div>
+						</div>
+				</div>
+		)
 }
