@@ -18,17 +18,27 @@
     transition: .3s;
 }
 
+.input_invalid {
+    box-shadow: 0 2px 8px 1px rgba(252, 77, 77, 0.502);
+}
+
 .input + .lbl {
+    transition: .3s;
     display: none;
 }
 
 .input + .lbl input {
+    cursor: pointer;
     display: none;
 }
 
 .input:focus {
     outline: none;
     box-shadow: 0 2px 8px 1px rgba(135, 153, 163, 0.697);
+}
+
+.input_invalid:focus {
+    box-shadow: 0 2px 8px 1px rgba(252, 77, 77, 0.609);
 }
 
 .input:focus + .lbl {

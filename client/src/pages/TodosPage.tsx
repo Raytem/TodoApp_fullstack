@@ -74,7 +74,7 @@ export const TodosPage: FC = () => {
 				case TodoOptions.COOPERATIVE:
 					return todo.cntOfUsers > 1;
 				case TodoOptions.OWN:
-					return cfg.CURRENT_USER_ID === todo.userList[0];
+					return cfg.CURRENT_USER_ID === todo.userList[0] && todo.cntOfUsers === 1;
 				default: 
 					return todo
 			}

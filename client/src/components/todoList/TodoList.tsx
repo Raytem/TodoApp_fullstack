@@ -3,7 +3,7 @@ import { ITodo } from '../../models/ITodo'
 import { ItemsNotFound } from '../itemsNotFound/ItemsNotFound'
 import { Todo } from '../todo/Todo'
 import { Loader } from '../UI/loader/Loader'
-import { AnimatePresence, Reorder, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface TodoListProps {
     todos: ITodo[],

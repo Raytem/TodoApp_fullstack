@@ -13,6 +13,8 @@
 
     --white: rgba(255, 255, 255, 0.764);
     --whiteBorder: rgb(255, 255, 255);
+
+    --errorRed: rgb(255, 84, 84);
 }
 
 * {

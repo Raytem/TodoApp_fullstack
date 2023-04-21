@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from '../loader/loader.module.css';
+import classNames from 'classnames';
 
-export const Loader = () => {
+interface LoaderProps {
+  isButtonLoader?: boolean
+}
+
+export const Loader: FC<LoaderProps> = (isButtonLoader) => {
   return (
-    <div className={styles.loader}></div>
+    <div className={classNames(
+      styles.loader,
+      isButtonLoader && styles.button_loader
+    )}/>
   )
 }

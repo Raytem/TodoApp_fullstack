@@ -32,3 +32,17 @@
     background: var(--redBtn);
     border: 2px solid var(--redBtnBorder);
 }
+
+
+
+.button:disabled {
+    color: rgba(34, 34, 34, 0.696);
+}
+
+.button:disabled:active {
+    scale: 1;
+}
+
+.button:disabled:hover {
+    background: rgba(189, 199, 216, 0.203);
+}

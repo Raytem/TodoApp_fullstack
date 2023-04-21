@@ -23,15 +23,13 @@ export const HomePage = () => {
 								>
 									Sign Up
 								</Button>
-								{
-									false &&
-									<Button 
-											variant={ButtonTypeEnum.BLUE}
-											onClick={() => navigate('/login')}
-									>
-										Login
-									</Button>
-								}
+								
+								<Button 
+									variant={ButtonTypeEnum.BLUE}
+									onClick={() => navigate('/login')}
+								>
+									Login
+								</Button>
 						</div>
 					</div>
 

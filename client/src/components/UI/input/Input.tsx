@@ -5,9 +5,10 @@ import styles from './input.module.css'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     variant?: InputTypeEnum
+    isInvalid?: boolean
 }
 
-export const Input: FC<InputProps> = ({variant, ...rest}) => {
+export const Input: FC<InputProps> = ({variant, isInvalid, ...rest}) => {
 
     function getClass() {
         switch(variant) {
@@ -34,7 +35,10 @@ export const Input: FC<InputProps> = ({variant, ...rest}) => {
     return (
         <div className={styles.searchSection}>
             <input 
-                className={getClass()}
+                className={classNames(
+                    getClass(), 
+                    isInvalid && styles.input_invalid
+                )}
                 ref={inputRef} 
                 {...rest}
             />

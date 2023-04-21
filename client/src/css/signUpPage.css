@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 50px);;
+    min-height: calc(100vh - 50px);
 
     animation: 1s anim forwards;
 }
@@ -42,4 +42,12 @@
         opacity: 1;
         transform: translateY(0px);
     }
+}
+
+
+.errorMessageDiv {
+    margin-top: -7px;
+    padding-left: 7px;
+    font-size: .8rem;
+    color: var(--errorRed)
 }
