@@ -1,26 +1,24 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
-import TodoService from '../API/TodoService';
+// import TodoService from '../API/TodoService';
 import { TodoList } from '../components/todoList/TodoList'
 import { Select } from '../components/UI/select/Select';
 import { Input } from '../components/UI/input/Input'
 import { ITodo } from '../models/ITodo';
 import '../css/todosPage.css';
-import { useFetch } from '../hooks/useFetch';
-import { useInfinitiePagination } from '../hooks/useInfinitiePagination';
-import { Modal } from '../components/UI/modal/Modal';
 import { Button } from '../components/UI/button/Button';
 import { InputTypeEnum } from '../components/UI/input/InputTypeEnum';
 import { useNavigate } from 'react-router-dom';
-import { Textarea } from '../components/UI/textarea/Textarea';
-import { ButtonTypeEnum } from '../components/UI/button/ButtonTypeEnum';
 import { Alert } from '../components/alert/Alert';
 import { Switcher } from '../components/UI/switcher/Switcher';
 import { TodoOptions } from '../components/UI/switcher/switcherEnums/TodoOptions';
 import { AddPerformerModal } from '../components/addPerformerModal/AddPerformerModal';
 
-import cfg from '../../config.json'
+import { getCurrentUser } from '../store/slices/currentUserSlice';
+import { todoApi } from '../API/TodoService';
 
 export const TodosPage: FC = () => {
+	
+	const currentUser = getCurrentUser();
 
 	const parentRef = useRef<HTMLDivElement>(null);
 	const childRef = useRef<HTMLDivElement>(null);
@@ -29,7 +27,6 @@ export const TodosPage: FC = () => {
 	const [sort, setSort] = useState<string>('');
 	const [isReverseOrder, setIsReverseOrder] = useState<boolean>(false);
 	const [todos, setTodos] = useState<ITodo[]>([]);
-	const [page, setPage] = useState<number>(1);
 	const [todoIdForDelete, setTodoIdForDelete] = useState<string>('');
 	const [todosType, setTodosType] = useState<TodoOptions>(TodoOptions.OWN)
 
@@ -38,23 +35,31 @@ export const TodosPage: FC = () => {
 
 	const navigate = useNavigate();
 	
-	const {fetchData: fetchTodos, isLoading, error} = useFetch<ITodo>(async () => {
-		const fetchedTodos: ITodo[] = await TodoService.getTodosByUserId(cfg.CURRENT_USER_ID)
-		setTodos(fetchedTodos);
-	});
+	// const {fetchData: fetchTodos, isLoading, error} = useFetch<ITodo>(async () => {
+	// 	if (currentUser._id) {
+	// 		const fetchedTodos: ITodo[] = await TodoService.getTodosByUserId(currentUser._id)
+	// 		setTodos(fetchedTodos);
+	// 	}
+	// });
+
+	const {data: fetchedTodos, isLoading, error} = todoApi.useGetTodosByUserIdQuery(currentUser._id);
+	const [api_deleteTodo] = todoApi.useDeleteTodoMutation();
 
 	const sortedTodos: ITodo[] = useMemo(() => {
 		if (sort) {
-			const sorted: ITodo[] = 
-			(sort !== 'isCompleted')
-			?
-				[...todos].sort((a: ITodo, b: ITodo) => {
-					return a[sort].localeCompare(b[sort]);
-				})
-			:
-				[...todos].sort((a: ITodo, b: ITodo) => {
+			let sorted: ITodo[];
+
+			if (sort === 'isCompleted') {
+				sorted = [...todos].sort((a: ITodo, b: ITodo) => {
 					return (a[sort] === b[sort]) ? 0 : a[sort] ? -1 : 1;
-				})
+				});
+			} else if (sort === 'creationDate') {
+				sorted = [...todos].sort((a, b) => a[sort] - b[sort]);
+			} else {
+				sorted = [...todos].sort((a: ITodo, b: ITodo) => {
+					return a[sort].localeCompare(b[sort]);
+				});
+			}
 
 			return !isReverseOrder ? sorted : sorted.reverse();
 		}
@@ -74,7 +79,7 @@ export const TodosPage: FC = () => {
 				case TodoOptions.COOPERATIVE:
 					return todo.cntOfUsers > 1;
 				case TodoOptions.OWN:
-					return cfg.CURRENT_USER_ID === todo.userList[0] && todo.cntOfUsers === 1;
+					return currentUser._id === todo.userList[0];
 				default: 
 					return todo
 			}
@@ -82,52 +87,13 @@ export const TodosPage: FC = () => {
 	}, [sortedAndSearchedTodos, todosType])
 
 	useEffect(() => {
-		fetchTodos();
-	}, [page])
-
-
-	async function completeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-		const todoId: string = e.target.dataset.todoid as string;
-		const todo: ITodo = await TodoService.update(todoId, {isCompleted: e.target.checked});
-
-		if(todo) {
-			const updatedTodos: ITodo[] = todos.map(t => {
-				if (t.id === todoId) {
-					const todoCopy: ITodo = {...t};
-					todoCopy.isCompleted = !t.isCompleted;
-					return todoCopy;
-				}
-				return t;
-			})
-			setTodos(updatedTodos);
+		if (!isLoading) {
+			setTodos(fetchedTodos as ITodo[]);
 		}
-	}
+	}, [fetchedTodos])
 
 	function editPerformersHandler() {
 		setAddPerformerVisible(true);
-	}
-
-	async function updateHandler(e: React.MouseEvent<HTMLButtonElement>, titleText: string, bodyText: string) {
-		const todoId: string = e.currentTarget.dataset.todoid as string;
-
-		const updatedTodo: ITodo = await TodoService.update(todoId, {
-			title: titleText,
-			body: bodyText
-		})
-
-		if (updatedTodo) {
-			const updatedTodoList: ITodo[] = todos.map(todo => {
-				if (todo.id === todoId) {
-					return {
-						...todo,
-						title: titleText,
-						body: bodyText
-					};
-				}
-				return todo;
-			})
-			setTodos(updatedTodoList)
-		}
 	}
 
 	function deleteHandler(e: React.MouseEvent<HTMLButtonElement>) {
@@ -136,16 +102,8 @@ export const TodosPage: FC = () => {
 		setTodoIdForDelete(todoId);
 	}
 
-	async function deleteTodo() {
-		//const todoForDelete: ITodo = TodoService.delete(userId, todoIdForDelete);
-		if (true) {
-			const updatedTodoList: ITodo[] = todos.filter(todo => {
-				if (todo.id !== todoIdForDelete) {
-					return todo;
-				}
-			})
-			setTodos(updatedTodoList)
-		}
+	function deleteTodo() {
+		api_deleteTodo({todoId: todoIdForDelete, userId: currentUser._id});
 	}
 
 	function createHandler(e: React.MouseEvent<HTMLButtonElement>) {
@@ -185,9 +143,10 @@ export const TodosPage: FC = () => {
 			onChange={switcherChangeHandler}
 		/>
 
-		<TodoList todos={sortedSearchedAndTypedTodos} isLoading={isLoading} error={error}
-			completeHandler={completeHandler}
-			updateHandler={updateHandler}
+		<TodoList 
+			todos={sortedSearchedAndTypedTodos} 
+			isLoading={isLoading} 
+			error={error}
 			deleteHandler={deleteHandler}
 			editPerformersHandler={editPerformersHandler}
 		/>

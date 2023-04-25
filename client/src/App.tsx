@@ -1,34 +1,47 @@
-import { useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './App.css';
-import { routes } from './routes';
-import store from './store/index';
 import styles from './css/container.module.css';
 import { Navbar } from './components/layout/Navbar/Navbar';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { AppRouter } from './components/AppRouter';
+import { checkAuth } from './store/actionCreators/currentUserActions';
+import { getIsAuth } from './store/slices/currentUserSlice';
+import { Loader } from './components/UI/loader/Loader';
+import getToken from './utils/getToken';
 
 function App() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => navigate('/todos'), []);
+  let isAuth = getIsAuth();
+  const {user, isLoading, error} = useAppSelector(state => state.currentUserReducer)
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      dispatch(checkAuth());
+
+      if (isAuth) {
+        navigate('/todos');
+      } else {
+        navigate('/home');
+      }
+    }
+  }, [isAuth]);
+
+  if (isLoading && getToken()) {
+    return <Loader/>
+  }
   
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Navbar/>
-        <div className={styles.container}>
-          
-          <Routes>
-            {
-              routes.map(({path, Element}) => 
-                <Route path={path} element={<Element/>} key={path}/>
-              )
-            }
-          </Routes>
-          
-        </div>
+    <div className="App">
+      <Navbar/>
+      <div className={styles.container}>
+
+      <AppRouter/>
+        
       </div>
-    </Provider>
+    </div>
   )
 }
 

@@ -9,7 +9,7 @@ import { Button } from "../UI/button/Button"
 import { Modal } from "../UI/modal/Modal"
 
 interface AlertProps {
-    okHandler: () => Promise<void>,
+    okHandler: () => void,
     isVisible: boolean,
     body: string,
     setAlertVisibility: () => void,

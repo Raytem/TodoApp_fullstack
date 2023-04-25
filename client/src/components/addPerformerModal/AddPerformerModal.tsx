@@ -9,9 +9,11 @@ import { Modal } from '../UI/modal/Modal'
 import { Switcher } from '../UI/switcher/Switcher';
 import { UserList } from '../userList/UserList';
 import styles from './addPerformerModal.module.css'
-import config from '../../../config.json'
-import { useSelector } from 'react-redux';
-import { selectedTodoSelector } from '../../store/slices/selectedTodoSlice';
+import { getSelectedTodo, setSelectedTodo } from '../../store/slices/selectedTodoSlice';
+import { getCurrentUser } from '../../store/slices/currentUserSlice';
+import { todoApi } from '../../API/TodoService';
+import { useAppDispatch } from '../../hooks/redux';
+import { ITodo } from '../../models/ITodo';
 
 interface AddPerformerModalProps {
     isVisible: boolean,
@@ -20,7 +22,14 @@ interface AddPerformerModalProps {
 
 export const AddPerformerModal: FC<AddPerformerModalProps> = ({isVisible, setVisibility}) => {
 
-    const selectedTodo = useSelector(selectedTodoSelector.getSelectedTodo);
+    const selectedTodo = getSelectedTodo();
+    const currentUser = getCurrentUser();
+
+    const {data: fetchedTodos} = todoApi.useGetTodosByUserIdQuery(currentUser._id);
+    const dispatch = useAppDispatch();
+
+    const [api_addTodoByUserId, {}] = todoApi.useAddTodoByUserIdMutation();
+    const [api_delTodoByUserId, {}] = todoApi.useDelTodoByUserIdMutation();
 
     const [users, setUsers] = useState<IUser[]>([]);
     const [searchValue, setSearchValue] = useState<string>('');
@@ -30,10 +39,6 @@ export const AddPerformerModal: FC<AddPerformerModalProps> = ({isVisible, setVis
         const fetchedUsers: IUser[] = await UserService.getAll();
         setUsers(fetchedUsers);
     })
-
-    useEffect(() => {
-        fetchUsers();
-    }, [selectedTodo])
 
     const searchedUsers: IUser[] = useMemo(() => {
         return users.filter(user => {
@@ -55,16 +60,25 @@ export const AddPerformerModal: FC<AddPerformerModalProps> = ({isVisible, setVis
         })
     }, [searchedUsers, usersType])
 
+    useEffect(() => {
+        fetchUsers();
+        const updatedSelectedTodo = fetchedTodos?.find(todo => todo.id === selectedTodo.id)
+        if (updatedSelectedTodo) {
+            dispatch(setSelectedTodo(updatedSelectedTodo))
+        }
+    }, [selectedTodo, fetchedTodos])
+
     function switcherChangeHandler(e: React.MouseEvent<HTMLDivElement>) {
         setUsersType(e.currentTarget.innerHTML as UserOptions);
     }
 
     async function addPerformerHandler(userId: string) {
-        console.log(userId)
+        api_addTodoByUserId({userId, todoId: selectedTodo.id});
     }
 
     async function removePerformerHandler(userId: string) {
-        console.log(userId)
+        api_delTodoByUserId({userId, todoId: selectedTodo.id});
+        setUsers(searchedAndTypedUsers);
     }
 
     return (
@@ -86,7 +100,7 @@ export const AddPerformerModal: FC<AddPerformerModalProps> = ({isVisible, setVis
                 />
 
                 {
-                    config.CURRENT_USER_ID === selectedTodo.userList[0]
+                    currentUser._id === selectedTodo.userList[0]
                     ?
                         <Switcher 
                         switchOptions={[UserOptions.OTHER, UserOptions.CURRENT]}

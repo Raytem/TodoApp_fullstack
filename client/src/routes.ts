@@ -15,8 +15,12 @@ export const routes: Routes[] = [
     { path: 'home', Element: HomePage },
     { path: '/signup', Element: SignUpPage },
     { path: '/login', Element: LoginPage },
-    { path: '/todos', Element: TodosPage },
     { path: '/todos/createTodo', Element: CreateTodoPage },
     { path: '/emailVerified', Element: EmailVerified },
     { path: '*', Element: PageNotFound }
+]
+
+export const authRoutes: Routes[] = [
+    ...routes,
+    { path: '/todos', Element: TodosPage }
 ]

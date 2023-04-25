@@ -9,7 +9,10 @@ todoRouter.get('/:id/users', TodoController.getUsersByTodoId);
 todoRouter.post('/:userId', TodoController.create);
 todoRouter.put('/:id', TodoController.update);
 todoRouter.patch('/:id', TodoController.partialUpdate);
-todoRouter.patch('/:todoId/:userId', TodoController.addTodoByUserId)
 todoRouter.delete('/:todoId/:userId', TodoController.delete);
+
+todoRouter.patch('/:todoId/:userId', TodoController.addTodoByUserId)
+todoRouter.put('/:todoId/:userId', TodoController.delTodoByUserId)
+
 
 export default todoRouter;

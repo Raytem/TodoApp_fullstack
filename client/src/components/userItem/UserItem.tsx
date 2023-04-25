@@ -6,8 +6,9 @@ import { Button } from '../UI/button/Button'
 import styles from './userItem.module.css'
 
 import config from '../../../config.json'
-import { selectedTodoSelector } from '../../store/slices/selectedTodoSlice'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux'
+import { getSelectedTodo } from '../../store/slices/selectedTodoSlice'
+import { getCurrentUser } from '../../store/slices/currentUserSlice'
 
 interface UserItemProps {
     user: IUser,
@@ -17,13 +18,14 @@ interface UserItemProps {
 
 export const UserItem: FC<UserItemProps> = ({user, addPerformerHandler, removePerformerHandler}) => {
 
-  const selectedTodo = useSelector(selectedTodoSelector.getSelectedTodo);
+  const selectedTodo = getSelectedTodo();
+  const currentUser = getCurrentUser();
 
   return (
     <div className={styles.userItemContainer}>
       <h4>{user.nickName}</h4>
       {
-        config.CURRENT_USER_ID === selectedTodo.userList[0]
+        currentUser._id === selectedTodo.userList[0]
         ?
           <div className={styles.buttons}>
             {

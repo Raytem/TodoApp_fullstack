@@ -7,38 +7,58 @@ import { ReadMoreLess } from '../readMoreLess/ReadMoreLess'
 import { Button } from '../UI/button/Button'
 import { Textarea } from '../UI/textarea/Textarea'
 import styles from './todo.module.css'
-import { useDispatch } from 'react-redux'
 import { setSelectedTodo } from '../../store/slices/selectedTodoSlice'
 
-import cfg from '../../../config.json'
+import { useAppDispatch } from '../../hooks/redux'
+import { getCurrentUser } from '../../store/slices/currentUserSlice'
+import { todoApi } from '../../API/TodoService'
 
 interface todoItemProps {
     todo: ITodo,
-    completeHandler: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>,
-    editPerformersHandler: (e: React.MouseEvent<HTMLButtonElement>) => void,
-    updateHandler: (e: React.MouseEvent<HTMLButtonElement>, titleText: string, bodyText: string) => Promise<void>,
     deleteHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
+    editPerformersHandler: () => void
 }
 
 export const Todo: FC<todoItemProps> = (
-  {todo, completeHandler, updateHandler, deleteHandler, editPerformersHandler}
+  {todo, deleteHandler, editPerformersHandler}
 ) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const currentUser = getCurrentUser();
+  const [api_updateTodo] = todoApi.useUpdateTodoMutation();
 
+  const titleCharLimit: number = 110;
+  const bodyCharLimit: number = 420
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
 
-  const title = useRef<HTMLHeadingElement>(null);
-  const body = useRef<HTMLParagraphElement>(null);
+  const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
 
   const [titleText, setTitleText] = useState<string>(todo.title);
   const [bodyText, setBodyText] = useState<string>(todo.body);
 
+  const title = useRef<HTMLHeadingElement>(null);
+  const body = useRef<HTMLParagraphElement>(null);
   const titleAreaHeight: number = title.current?.offsetHeight as number;
   const bodyAreaHeight: number = body.current?.offsetHeight as number;
 
-  const charLimit: number = 420;
+  const completeHandler = () => {
+    api_updateTodo({ 
+      todoId: todo.id, 
+      body: {
+        isCompleted: !todo.isCompleted
+      }
+    });
+  }
+
+  const updateHandler = () => {
+    api_updateTodo({
+			todoId: todo.id, 
+			body: {
+				title: titleText,
+				body: bodyText
+			}
+		})
+  }
 
   return (
     <div className={styles.todo}>
@@ -54,13 +74,16 @@ export const Todo: FC<todoItemProps> = (
 
             <div className={styles.todoInner}>
               <div className={styles.todoHeader}>
-                <h4 ref={title}>{titleText}</h4>
+                <ReadMoreLess show={showMore} limit={titleCharLimit}>
+                  <h4 ref={title}>{titleText}</h4>
+                </ReadMoreLess>
+                
                 <div className={styles.todoHeader__creationDate}>
                   {dateFormatter(todo.createdAt)}
                 </div>
               </div>
 
-              <ReadMoreLess show={showMore} limit={charLimit}>
+              <ReadMoreLess show={showMore} limit={bodyCharLimit}>
                 <p ref={body} className={styles.todo__body}>{bodyText}</p>
               </ReadMoreLess>
 
@@ -77,35 +100,41 @@ export const Todo: FC<todoItemProps> = (
                   variant={ButtonTypeEnum.BLUE}
                   data-todoid={todo.id}
                   onClick={(e) => {
-                    editPerformersHandler(e);
                     dispatch(setSelectedTodo(todo));
+                    editPerformersHandler();
                   }}
                   >
                     Performers
                 </Button>
-                {
-                  todo.userList[0] === cfg.CURRENT_USER_ID 
-                  ?
-                    <div className={styles.todoRightButtons}>
-                      <Button 
-                        variant={ButtonTypeEnum.BLUE} 
-                        onClick={(e) => {
-                          setShowMore(true)
-                          setIsEditModeOn(true);
-                        }} 
-                        data-todoid={todo.id}>
-                          Edit
-                      </Button>
+                  <div className={styles.todoRightButtons}>
+                  {todo.userList[0] === currentUser._id 
+                    ?
+                      <>
+                        <Button 
+                          variant={ButtonTypeEnum.BLUE} 
+                          onClick={(e) => {
+                            setShowMore(true)
+                            setIsEditModeOn(true);
+                          }} 
+                          data-todoid={todo.id}>
+                            Edit
+                        </Button>
+                        <Button
+                          variant={ButtonTypeEnum.RED}
+                          onClick={deleteHandler}
+                          data-todoid={todo.id}>
+                            Delete
+                        </Button>
+                      </>
+                    :
                       <Button
                         variant={ButtonTypeEnum.RED}
                         onClick={deleteHandler}
                         data-todoid={todo.id}>
                           Delete
                       </Button>
-                    </div>
-                  :
-                    <div></div>
-                }
+                    } 
+                  </div>
               </div>
             </div>
           </>
@@ -152,8 +181,8 @@ export const Todo: FC<todoItemProps> = (
                   variant={ButtonTypeEnum.BLUE} 
                   data-todoid={todo.id}
                   onClick={(e) => {
-                    editPerformersHandler(e);
                     dispatch(setSelectedTodo(todo));
+                    editPerformersHandler();
                   }}
                   >
                     Performers
@@ -163,7 +192,7 @@ export const Todo: FC<todoItemProps> = (
                     variant={ButtonTypeEnum.BLUE} 
                     onClick={(e) => {
                       setIsEditModeOn(false)
-                      updateHandler(e, titleText, bodyText)
+                      updateHandler()
                     }} 
                     data-todoid={todo.id}>
                       Ok

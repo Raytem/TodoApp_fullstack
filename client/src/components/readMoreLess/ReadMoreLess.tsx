@@ -23,7 +23,7 @@ export const ReadMoreLess: FC<ReadMoreLessProps> = ({limit, children, show}) => 
                     ?
                         children
                     :
-                        <div className={children.props.className}>{str.substring(0, limit - 3) + '...'}</div>
+                        <children.type className={children.props.className}>{str.substring(0, limit - 3) + '...'}</children.type>
                     }
                     
                     <button 

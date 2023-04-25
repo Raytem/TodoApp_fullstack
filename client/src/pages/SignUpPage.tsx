@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
 import { WhiteBlock } from '../components/UI/whiteBlock/WhiteBlock'
@@ -9,6 +9,9 @@ import { InputTypeEnum } from '../components/UI/input/InputTypeEnum'
 import { ErrorMessage, Formik } from 'formik'
 import * as Yup from "yup";
 import { Loader } from '../components/UI/loader/Loader'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { registration } from '../store/actionCreators/currentUserActions'
+import { currentUserSlice } from '../store/slices/currentUserSlice'
 
 
 const registrationSchema = Yup.object().shape({
@@ -25,7 +28,12 @@ const registrationSchema = Yup.object().shape({
 
 export const SignUpPage = () => {
 
-  const navigate = useNavigate();
+  const {user, isLoading, error} = useAppSelector(state => state.currentUserReducer)
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(currentUserSlice.actions.fetchingSuccess())
+  }, [])
 
   return (
     <div className='signUpDiv'>
@@ -40,7 +48,11 @@ export const SignUpPage = () => {
               password: ''
             }}
             onSubmit={async (values, actions) => {
-              await new Promise(resolve => setTimeout(resolve, 2000))
+              dispatch(registration(
+                values.username,
+                values.email, 
+                values.password
+              ));
             }}
             validationSchema={registrationSchema}
           >
@@ -52,7 +64,7 @@ export const SignUpPage = () => {
                   placeholder='Username' 
                   onChange={props.handleChange} 
                   value={props.values.username}
-                  isInvalid={!!props.errors.username}
+                  isInvalid={!!props.errors.username || !!error}
                 />
                 <ErrorMessage name='username' component='div' className='errorMessageDiv' />
 
@@ -62,7 +74,7 @@ export const SignUpPage = () => {
                   placeholder='Email'
                   onChange={props.handleChange}
                   value={props.values.email}
-                  isInvalid={!!props.errors.email}
+                  isInvalid={!!props.errors.email || !!error}
                 />
                 <ErrorMessage component='div' name='email' className='errorMessageDiv'/>
 
@@ -80,11 +92,15 @@ export const SignUpPage = () => {
                 <Button
                 type='submit' 
                 variant={ButtonTypeEnum.BLUE}
-                disabled={props.isSubmitting}
+                disabled={props.isSubmitting || isLoading}
                 >
                   Create Account
-                  {props.isSubmitting && <Loader isButtonLoader={true}/>}  
+                  {(props.isSubmitting || isLoading) && <Loader isButtonLoader={true}/>}  
                 </Button>
+
+                {error && <div style={{textAlign: 'center'}} className='errorMessageDiv'>
+                  User with this name or email is already exists
+                </div>}
 
                 <div className='loginOffer'>Already have an account? <NavLink className='link' to={'/login'}>Login</NavLink></div>
               </form>

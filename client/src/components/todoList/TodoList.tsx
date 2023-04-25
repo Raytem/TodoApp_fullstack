@@ -4,19 +4,19 @@ import { ItemsNotFound } from '../itemsNotFound/ItemsNotFound'
 import { Todo } from '../todo/Todo'
 import { Loader } from '../UI/loader/Loader'
 import { AnimatePresence, motion } from 'framer-motion'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
+import { SerializedError } from '@reduxjs/toolkit'
 
 interface TodoListProps {
     todos: ITodo[],
     isLoading: boolean,
-    error: Error | null,
-    completeHandler: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>,
-    editPerformersHandler: (e: React.MouseEvent<HTMLButtonElement>) => void,
-    updateHandler: (e: React.MouseEvent<HTMLButtonElement>, titleText: string, bodyText: string) => Promise<void>,
+    error: FetchBaseQueryError | SerializedError | undefined,
     deleteHandler: (e: React.MouseEvent<HTMLButtonElement>) => void,
+    editPerformersHandler: () => void
 }
 
 export const TodoList: FC<TodoListProps> = (
-  {todos, isLoading, error, completeHandler, updateHandler, deleteHandler, editPerformersHandler}
+  {todos, isLoading, error, deleteHandler, editPerformersHandler}
 ) => {
 
   return (
@@ -39,10 +39,8 @@ export const TodoList: FC<TodoListProps> = (
                   <Todo
                     key={todo.id} 
                     todo={todo}
-                    completeHandler={completeHandler}
-                    editPerformersHandler={editPerformersHandler}
-                    updateHandler={updateHandler}
                     deleteHandler={deleteHandler}
+                    editPerformersHandler={editPerformersHandler}
                   />
                 </motion.li>
               )

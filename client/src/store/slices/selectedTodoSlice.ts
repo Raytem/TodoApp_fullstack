@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ITodo } from "../../models/ITodo";
+import { useAppSelector } from "../../hooks/redux";
 
 interface initialStateInterface {
     selectedTodo: ITodo;
@@ -7,31 +8,27 @@ interface initialStateInterface {
 
 const initialState: initialStateInterface = {
     selectedTodo: {
-        id: 'string',
-        title: 'string',
-        body: 'string',
+        id: '',
+        title: '',
+        body: '',
         isCompleted: false,
-        cntOfUsers: 1,
+        cntOfUsers: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
         userList: [''],
-        creator: 'string'
+        creator: ''
     }
 }
 
-const selectedTodoSlice = createSlice({
+export const selectedTodoSlice = createSlice({
     name: 'selectedTodo',
     initialState: initialState,
     reducers: {
-        setSelectedTodo: (state, action) => {
+        setSelectedTodo: (state, action: PayloadAction<ITodo>) => {
             state.selectedTodo = action.payload
         }
     }
 })
 
-export const selectedTodoSelector = {
-    getSelectedTodo: (state: any) =>  state.selectedTodo
-}
-
 export const { setSelectedTodo } = selectedTodoSlice.actions;
-export default selectedTodoSlice;
+export const getSelectedTodo = () => useAppSelector(state => state.selectedTodoReducer.selectedTodo);

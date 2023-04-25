@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
@@ -9,6 +9,9 @@ import '../css/loginPage.css'
 import { ErrorMessage, Formik } from 'formik'
 import { Loader } from '../components/UI/loader/Loader'
 import * as Yup from "yup";
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { login } from '../store/actionCreators/currentUserActions'
+import { currentUserSlice } from '../store/slices/currentUserSlice'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,7 +25,13 @@ const loginSchema = Yup.object().shape({
 
 export const LoginPage = () => {
 
-  const navigate = useNavigate();
+  const {user, isLoading, error} = useAppSelector(state => state.currentUserReducer)
+  const dispatch = useAppDispatch();
+
+
+  useEffect(() => {
+    dispatch(currentUserSlice.actions.fetchingSuccess())
+  }, [])
 
   return (
     <div className='loginDiv'>
@@ -36,7 +45,10 @@ export const LoginPage = () => {
             password: ''
           }}
           onSubmit={async (values, actions) => {
-            await new Promise(resolve => setTimeout(resolve, 2000))
+            dispatch(login(
+              values.email, 
+              values.password
+            ));
           }}
           validationSchema={loginSchema}
         >
@@ -48,7 +60,7 @@ export const LoginPage = () => {
                 name='email'
                 onChange={props.handleChange}
                 value={props.values.email}
-                isInvalid={!!props.errors.email}
+                isInvalid={!!props.errors.email || !!error}
               />
               <ErrorMessage component='div' name='email' className='errorMessageDiv' />
 
@@ -59,18 +71,22 @@ export const LoginPage = () => {
                 name='password'
                 onChange={props.handleChange}
                 value={props.values.password}
-                isInvalid={!!props.errors.password}
+                isInvalid={!!props.errors.password || !!error}
               />
               <ErrorMessage component='div' name='password' className='errorMessageDiv' />
 
               <Button 
                 type='submit' 
                 variant={ButtonTypeEnum.BLUE}
-                disabled={props.isSubmitting}
+                disabled={props.isSubmitting || isLoading}
               >
                 Login
-                {props.isSubmitting && <Loader isButtonLoader={true}/>}  
+                {props.isSubmitting || isLoading && <Loader isButtonLoader={true}/>}  
               </Button>
+
+              {error && <div style={{textAlign: 'center'}} className='errorMessageDiv'>
+                Invalid email or password
+              </div>}
 
               <div className='signupOffer'>Don't have an account? <NavLink className='link' to={'/signup'}>Sign Up</NavLink></div>
             </form>

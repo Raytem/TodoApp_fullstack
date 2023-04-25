@@ -47,6 +47,15 @@ class TodoController {
         }
     }
 
+    async delTodoByUserId(req, res, next) {
+        try {
+            const todo = await TodoService.delTodoByUserId(req.params.todoId, req.params.userId);
+            return res.status(202).json(todo);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async update(req, res, next) {
         try {
             const updatedTodo = await TodoService.update(req.params.id, req.body);
