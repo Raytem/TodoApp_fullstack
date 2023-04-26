@@ -12,8 +12,8 @@ class MailService {
             debug: true,
             secureConnection: false,
             auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASSWORD
+                user: 'todorestapplication@gmail.com',
+                pass: 'nmdaiphmdykcojwi'
             }
         });
     }

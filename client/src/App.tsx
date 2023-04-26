@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import styles from './css/container.module.css';
 import { Navbar } from './components/layout/Navbar/Navbar';
@@ -12,6 +12,7 @@ import getToken from './utils/getToken';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   let isAuth = getIsAuth();
@@ -20,13 +21,17 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       dispatch(checkAuth());
-
+    }
+    
+    console.log(location.pathname)
+    if (location.pathname !== '/emailVerified') {
       if (isAuth) {
         navigate('/todos');
       } else {
         navigate('/home');
-      }
+      }   
     }
+    
   }, [isAuth]);
 
   if (isLoading && getToken()) {
