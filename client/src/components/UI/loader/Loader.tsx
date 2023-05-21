@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import styles from '../loader/loader.module.css';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 interface LoaderProps {
   isButtonLoader?: boolean
