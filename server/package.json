@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "Danik1320@yandex.by",
@@ -26,6 +27,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }

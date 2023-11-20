@@ -4,7 +4,7 @@ import startApp from "./startApp.js";
 import userRouter from "./routers/userRouter.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRouter from "./routers/authRouter.js";
+import authRouter from "./routers/authRouter .js";
 import authMiddleware from "./middlewares/authMiddleware.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 import ApiError from "./exceptions/ApiError.js";
