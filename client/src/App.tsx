@@ -23,7 +23,6 @@ function App() {
       dispatch(checkAuth());
     }
     
-    console.log(location.pathname)
     if (location.pathname !== '/emailVerified') {
       if (isAuth) {
         navigate('/todos');
