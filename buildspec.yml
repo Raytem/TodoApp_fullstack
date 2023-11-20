@@ -3,7 +3,7 @@ version: 0.2
 phases: 
   install:
     runtime-versions:
-          nodejs: 18
+      nodejs: 18
     commands:
       - echo Installing dependencies...
       - npm install
@@ -14,5 +14,5 @@ phases:
 
 artifacts: 
   files: 
-      - '**/*'
-    discard-paths: yes
+    - '**/*'
+  discard-paths: yes
