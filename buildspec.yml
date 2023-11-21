@@ -6,12 +6,12 @@ phases:
       nodejs: 18
     commands:
       - echo Installing dependencies...
-      - cd /server
-      - npm install
   build: 
     commands: 
       - echo Build started on `date`
       - echo Building...
+      - cd server
+      - npm install
 
 artifacts: 
   files: 
